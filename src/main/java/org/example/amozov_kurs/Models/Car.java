@@ -10,6 +10,7 @@ public class Car {
     private Integer price;
     private String engineType;
     private String transmission;
+    private String imagePath;
 
     public Car(Integer idCars,
                Integer idManufacturers,
@@ -18,7 +19,8 @@ public class Car {
                Integer year,
                Integer price,
                String engineType,
-               String transmission) {
+               String transmission,
+               String imagePath) {
         this.idCars = idCars;
         this.idManufacturers = idManufacturers;
         this.modelName = modelName;
@@ -27,6 +29,7 @@ public class Car {
         this.price = price;
         this.engineType = engineType;
         this.transmission = transmission;
+        this.imagePath = imagePath;
     }
 
     public Integer getIdCars() { return idCars; }
@@ -48,4 +51,6 @@ public class Car {
     public String getTransmission() { return transmission; }
 
     public String getManufacturerName() { return manufacturerName; }
+
+    public String getImagePath() { return imagePath; }
 }

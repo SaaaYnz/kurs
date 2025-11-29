@@ -1,25 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.CarCardController" styleClass="catalog-card">
+<VBox prefHeight="304.0" prefWidth="262.0" style="-fx-border-color: #0fb7ff; -fx-border-radius: 10; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.CarCardController">
     <children>
-        <ImageView fx:id="carImage" fitHeight="180.0" fitWidth="260.0" preserveRatio="true">
-            <VBox.margin>
-                <Insets bottom="15.0" />
-            </VBox.margin>
-        </ImageView>
-        <Label fx:id="titleLabel" styleClass="title" text="Toyota Camry 2020" wrapText="true" />
+      <VBox maxHeight="200.0" prefHeight="200.0" prefWidth="100.0">
+         <children>
+              <ImageView fx:id="carImage" fitHeight="180.0" fitWidth="260.0" preserveRatio="true">
+                  <VBox.margin>
+                      <Insets bottom="15.0" />
+                  </VBox.margin>
+              </ImageView>
+         </children>
+      </VBox>
+        <Label fx:id="titleLabel" styleClass="title" wrapText="true" />
         <HBox styleClass="info-row">
             <children>
-                <Label fx:id="priceLabel" styleClass="price" text="💰 2 150 000 ₽" />
+                <Label fx:id="priceLabel" styleClass="price" />
                 <Region HBox.hgrow="ALWAYS" />
             </children>
         </HBox>
-        <Label fx:id="specsLabel" styleClass="specs" text="Седан • 2.5л Бензин • Автомат" />
-        <Button fx:id="detailsButton" onAction="#handleDetails" styleClass="buy-btn" text="Подробнее" />
+        <Label fx:id="specsLabel" styleClass="specs" />
+        <Button fx:id="detailsButton" onAction="#handleDetails" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" styleClass="buy-btn" text="Подробнее" textFill="WHITE" />
     </children>
 </VBox>

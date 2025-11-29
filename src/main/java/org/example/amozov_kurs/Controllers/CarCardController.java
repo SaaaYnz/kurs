@@ -3,8 +3,11 @@ package org.example.amozov_kurs.Controllers;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.amozov_kurs.Models.Car;
+
+import java.io.InputStream;
 
 public class CarCardController {
 
@@ -19,12 +22,33 @@ public class CarCardController {
     public void setCar(Car car) {
         this.car = car;
         titleLabel.setText(car.getManufacturerName() + " " + car.getModelName() + " " + car.getYear());
-        priceLabel.setText((car.getPrice()) + " Р");
+        priceLabel.setText(car.getPrice() + "Р");
         specsLabel.setText(car.getBodyType() + " • " + car.getEngineType() + " • " + car.getTransmission());
-    }
 
+        loadCarImage();
+    }
+    private void loadCarImage() {
+        try {
+            String imageName = car.getImagePath();
+
+            if (imageName != null && !imageName.trim().isEmpty()) {
+                String imagePath = "/org/example/amozov_kurs/image/" + imageName;
+
+                // Загружаем изображение
+                InputStream stream = getClass().getResourceAsStream(imagePath);
+                if (stream != null) {
+                    Image image = new Image(stream);
+                    carImage.setImage(image);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Ошибка загрузки изображения: " + e.getMessage());
+
+        }
+    }
     @FXML
     private void handleDetails() {
         System.out.println("Подробнее: " + car.getModelName());
+        // TODO: Открыть детальную страницу
     }
 }

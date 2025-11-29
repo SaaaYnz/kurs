@@ -12,7 +12,7 @@ import java.util.List;
 public class CarDAO {
     public static List<Car> loadCars() {
         List<Car> cars = new ArrayList<>();
-        String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission FROM cars c LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers ORDER BY c.year DESC, c.model";
+        String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission, c.image_path FROM cars c LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers ORDER BY c.year DESC, c.model";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -27,8 +27,8 @@ public class CarDAO {
                         rs.getInt("year"),
                         rs.getInt("price"),
                         rs.getString("engine_type"),
-                        rs.getString("transmission")
-
+                        rs.getString("transmission"),
+                        rs.getString("image_path")
                 );
                 car.setManufacturerName(rs.getString("name"));
 
@@ -38,6 +38,38 @@ public class CarDAO {
             e.printStackTrace();
         }
 
+        return cars;
+    }
+
+    public static List<Car> searchCars(String query) {
+        List<Car> cars = new ArrayList<>();
+        String sql = "SELECT * FROM cars WHERE name LIKE ? OR model LIKE ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, "%" + query + "%");
+            pstmt.setString(2, "%" + query + "%");
+
+            ResultSet rs = pstmt.executeQuery();
+
+            while (rs.next()) {
+                Car car = new Car(
+                        rs.getInt("id_cars"),
+                        rs.getInt("id_manufacturers"),
+                        rs.getString("model"),
+                        rs.getString("body_type"),
+                        rs.getInt("year"),
+                        rs.getInt("price"),
+                        rs.getString("engine_type"),
+                        rs.getString("transmission"),
+                        rs.getString("image_path")
+                );
+                cars.add(car);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return cars;
     }
 }
