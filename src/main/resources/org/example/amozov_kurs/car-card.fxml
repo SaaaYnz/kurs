@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.CarCardController" styleClass="catalog-card">
+    <children>
+        <ImageView fx:id="carImage" fitHeight="180.0" fitWidth="260.0" preserveRatio="true">
+            <VBox.margin>
+                <Insets bottom="15.0" />
+            </VBox.margin>
+        </ImageView>
+        <Label fx:id="titleLabel" styleClass="title" text="Toyota Camry 2020" wrapText="true" />
+        <HBox styleClass="info-row">
+            <children>
+                <Label fx:id="priceLabel" styleClass="price" text="💰 2 150 000 ₽" />
+                <Region HBox.hgrow="ALWAYS" />
+            </children>
+        </HBox>
+        <Label fx:id="specsLabel" styleClass="specs" text="Седан • 2.5л Бензин • Автомат" />
+        <Button fx:id="detailsButton" onAction="#handleDetails" styleClass="buy-btn" text="Подробнее" />
+    </children>
+</VBox>

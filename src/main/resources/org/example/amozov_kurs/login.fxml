@@ -11,78 +11,65 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" prefHeight="318.0" prefWidth="483.0" spacing="20.0"
-      style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-radius: 10;"
-      xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="org.example.amozov_kurs.Controllers.LoginController">
+<VBox alignment="TOP_CENTER" prefHeight="318.0" prefWidth="483.0" spacing="20.0" style="-fx-background-radius: 10; -fx-background-color: white; -fx-border-radius: 10;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.LoginController">
     <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
         <Label text="AUTHORIZATION">
             <font>
-                <Font name="System Bold" size="28.0"/>
+                <Font name="System Bold" size="28.0" />
             </font>
             <VBox.margin>
-                <Insets top="10.0"/>
+                <Insets top="10.0" />
             </VBox.margin>
         </Label>
-        <Separator prefHeight="10.0" prefWidth="500.0"/>
+        <Separator prefHeight="10.0" prefWidth="500.0" />
         <VBox alignment="CENTER" prefHeight="117.0" prefWidth="443.0" spacing="25.0">
             <children>
-                <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0"
-                           promptText="E-mail / Login" style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="E-mail / Login" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                     <opaqueInsets>
-                        <Insets/>
+                        <Insets />
                     </opaqueInsets>
                 </TextField>
-                <PasswordField fx:id="PasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0"
-                               promptText="Password" style="-fx-background-radius: 15; -fx-border-color: 15;"/>
+                <PasswordField fx:id="PasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Password" style="-fx-background-radius: 15; -fx-border-color: 15;" />
             </children>
         </VBox>
-        <HBox alignment="CENTER_RIGHT" prefHeight="1.0" prefWidth="443.0">
+        <HBox alignment="CENTER_RIGHT" maxWidth="415.0" prefHeight="1.0" prefWidth="400.0">
             <children>
-                <Button mnemonicParsing="false" prefWidth="104.0" style="-fx-background-color: FFFFFF;"
-                        text="forgot password?" textFill="#0fb7ff">
+                <Button mnemonicParsing="false" prefHeight="23.0" prefWidth="121.0" style="-fx-background-color: FFFFFF;" text="forgot password?" textFill="#0fb7ff">
                     <font>
-                        <Font name="System Italic" size="12.0"/>
+                        <Font name="System Italic" size="12.0" />
                     </font>
                     <HBox.margin>
-                        <Insets right="15.0"/>
+                        <Insets />
                     </HBox.margin>
                 </Button>
             </children>
         </HBox>
-        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="443.0" spacing="20.0">
+        <HBox alignment="CENTER" prefHeight="20.0" prefWidth="400.0" spacing="20.0">
             <children>
                 <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
                     <children>
-                        <CheckBox fx:id="CheckRemember" mnemonicParsing="false" prefHeight="17.0" prefWidth="86.0"
-                                  text="Remember "/>
+                        <CheckBox fx:id="CheckRemember" mnemonicParsing="false" prefHeight="18.0" prefWidth="133.0" text="Remember me" />
                     </children>
                 </HBox>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
                     <children>
-                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0"
-                                prefWidth="90.0"
-                                style="-fx-background-color: #0fb7ff; -fx-border-radius: 15; -fx-background-radius: 15;"
-                                text="   Login   " textFill="WHITE">
+                        <Button fx:id="LoginButton" mnemonicParsing="false" onAction="#handleLogin" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-border-radius: 15; -fx-background-radius: 15;" text="   Login   " textFill="WHITE">
                             <font>
-                                <Font size="15.0"/>
+                                <Font size="15.0" />
                             </font>
                             <HBox.margin>
-                                <Insets/>
+                                <Insets />
                             </HBox.margin>
                         </Button>
-                        <Button fx:id="RegistrationButton" mnemonicParsing="false" onAction="#handleRegister"
-                                prefHeight="30.0" prefWidth="90.0"
-                                style="-fx-border-color: #0fb7ff; -fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15;"
-                                text="Register" textFill="#0fb7ff">
+                        <Button fx:id="RegistrationButton" mnemonicParsing="false" onAction="#handleRegister" prefHeight="30.0" prefWidth="90.0" style="-fx-border-color: #0fb7ff; -fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15;" text="Register" textFill="#0fb7ff">
                             <font>
-                                <Font size="15.0"/>
+                                <Font size="15.0" />
                             </font>
                             <HBox.margin>
-                                <Insets right="5.0"/>
+                                <Insets right="5.0" />
                             </HBox.margin>
                         </Button>
                     </children>

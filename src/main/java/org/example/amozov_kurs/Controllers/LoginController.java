@@ -62,18 +62,17 @@ public class LoginController {
         Stage stage = (Stage) PasswordField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/registration.fxml"));
         Parent root = loader.load();
-        stage.setTitle("");
+        stage.setTitle("Registration");
         stage.setScene(new Scene(root));
         stage.show();
     }
 
     private void openMainWindow() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("new-window.fxml"));
+        Stage stage = (Stage) PasswordField.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/main_window.fxml"));
         Parent root = loader.load();
-        Stage stage = new Stage();
-        stage.setTitle("Новое окно");
+        stage.setTitle("Catalog");
         stage.setScene(new Scene(root));
-        stage.initOwner(LoginButton.getScene().getWindow());
         stage.show();
     }
 

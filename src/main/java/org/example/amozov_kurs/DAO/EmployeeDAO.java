@@ -23,9 +23,7 @@ public class EmployeeDAO {
                             rs.getString("first_name"),
                             rs.getString("last_name"),
                             rs.getString("role"),
-                            rs.getString("phone"),
                             rs.getString("email"),
-                            rs.getString("birthday"),
                             rs.getString("login")
                     );
                 }
@@ -37,7 +35,7 @@ public class EmployeeDAO {
     }
 
     public boolean registerUser(String first_name, String last_name, String email, String login, String password) {
-        String sql = "INSERT INTO employees (first_name, last_name, email, login, password) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO employees (first_name, last_name, email, login, password) VALUES (?, ?, ?, ?, ?)";
 
         try (Connection db = DbConnection.getConnection();
              PreparedStatement stmt = db.prepareStatement(sql)) {
@@ -58,12 +56,13 @@ public class EmployeeDAO {
     }
 
     public boolean userExists(String username) {
-        String sql = "SELECT 1 FROM users WHERE username = ?";
+        String sql = "SELECT 1 FROM employees WHERE login = ? or email = ?";
 
         try (Connection db = DbConnection.getConnection();
              PreparedStatement stmt = db.prepareStatement(sql)) {
 
             stmt.setString(1, username);
+            stmt.setString(2, username);
             try (ResultSet rs = stmt.executeQuery()) {
                 return rs.next();
             }
