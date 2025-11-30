@@ -3,6 +3,7 @@ module org.example.amozov_kurs {
     requires javafx.fxml;
     requires java.sql;
     requires javafx.graphics;
+    requires java.desktop;
 
 
     opens org.example.amozov_kurs to javafx.fxml;

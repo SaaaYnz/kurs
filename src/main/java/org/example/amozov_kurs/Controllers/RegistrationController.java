@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.example.amozov_kurs.Models.Employee;
-import org.example.amozov_kurs.DAO.EmployeeDAO;
+import org.example.amozov_kurs.Models.User;
+import org.example.amozov_kurs.DAO.UserDAO;
 
 import java.io.IOException;
 
@@ -44,8 +44,8 @@ public class RegistrationController {
     @FXML
     private Button ReturnButton;
 
-    private EmployeeDAO employeeDAO = new EmployeeDAO();
-    private static Employee currentEmployee;
+    private UserDAO userDAO = new UserDAO();
+    private static User currentUser;
 
 
     @FXML
@@ -66,7 +66,7 @@ public class RegistrationController {
             return;
         }
 
-        boolean registered = employeeDAO.registerUser(firstName, lastName, email, login, password);
+        boolean registered = userDAO.registerUser(firstName, lastName, email, login, password);
         if (registered) {
             showAlert("Success", "Registration successful!");
             openMainWindow();
