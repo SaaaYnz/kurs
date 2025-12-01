@@ -4,7 +4,7 @@ public class User {
     private Integer id_users;
     private String first_name;
     private String last_name;
-    private String role; // client, consultant, admin
+    private String role;
     private String email;
     private String login;
 
@@ -34,7 +34,6 @@ public class User {
 
     public String getLogin() { return login; }
 
-    // Методы для проверки ролей
     public boolean isClient() {
         return "client".equals(role);
     }

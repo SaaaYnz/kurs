@@ -14,19 +14,31 @@
          <children>
               <ImageView fx:id="carImage" fitHeight="180.0" fitWidth="260.0" preserveRatio="true">
                   <VBox.margin>
-                      <Insets bottom="15.0" />
+                      <Insets bottom="15.0" left="1.0" right="1.0" top="6.0" />
                   </VBox.margin>
               </ImageView>
          </children>
       </VBox>
-        <Label fx:id="titleLabel" styleClass="title" wrapText="true" />
+        <Label fx:id="titleLabel" styleClass="title" wrapText="true">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin></Label>
         <HBox styleClass="info-row">
             <children>
                 <Label fx:id="priceLabel" styleClass="price" />
                 <Region HBox.hgrow="ALWAYS" />
             </children>
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin>
         </HBox>
-        <Label fx:id="specsLabel" styleClass="specs" />
-        <Button fx:id="detailsButton" onAction="#handleDetails" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" styleClass="buy-btn" text="Подробнее" textFill="WHITE" />
+        <Label fx:id="specsLabel" styleClass="specs">
+         <VBox.margin>
+            <Insets left="5.0" />
+         </VBox.margin></Label>
+        <Button fx:id="detailsButton" onAction="#handleDetails" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" styleClass="buy-btn" text="Подробнее" textFill="WHITE">
+         <VBox.margin>
+            <Insets left="5.0" top="20.0" />
+         </VBox.margin></Button>
     </children>
 </VBox>

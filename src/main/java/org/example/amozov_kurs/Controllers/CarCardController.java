@@ -28,7 +28,7 @@ public class CarCardController {
     public void setCar(Car car) {
         this.car = car;
         titleLabel.setText(car.getManufacturerName() + " " + car.getModelName() + " " + car.getYear());
-        priceLabel.setText(car.getPrice() + "Р");
+        priceLabel.setText(car.getPrice() + " Р");
         specsLabel.setText(car.getBodyType() + " • " + car.getEngineType() + " • " + car.getTransmission());
         loadCarImage();
     }
@@ -54,6 +54,6 @@ public class CarCardController {
 
     @FXML
     private void handleDetails() {
-        // TODO: Открыть детальную страницу
+
     }
 }

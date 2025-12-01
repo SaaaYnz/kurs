@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0"
+      prefWidth="1016.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.amozov_kurs.Controllers.AdminController">
+    <children>
+        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+            <children>
+                <Button fx:id="backButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Back" textFill="WHITE">
+                    <HBox.margin>
+                        <Insets left="15.0"/>
+                    </HBox.margin>
+                </Button>
+                <Label text="Admin panel">
+                    <font>
+                        <Font name="System Bold" size="28.0"/>
+                    </font>
+                    <HBox.margin>
+                        <Insets left="25.0"/>
+                    </HBox.margin>
+                </Label>
+            </children>
+        </HBox>
+        <TableView fx:id="carTable" prefHeight="482.0" prefWidth="1016.0">
+            <columns>
+                <TableColumn fx:id="manufactureColumn" prefWidth="125.0" text="Manufacture"/>
+                <TableColumn fx:id="modelColumn" minWidth="0.0" prefWidth="127.0" text="Model"/>
+                <TableColumn fx:id="bodyTypeColumn" minWidth="0.0" prefWidth="127.0" text="Body type"/>
+                <TableColumn fx:id="yearColumn" minWidth="0.0" prefWidth="127.0" text="Year"/>
+                <TableColumn fx:id="engineTypeColumn" minWidth="0.0" prefWidth="127.0" text="Engine type"/>
+                <TableColumn fx:id="transmissionColumn" minWidth="0.0" prefWidth="127.0" text="Transmission"/>
+                <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="127.0" text="Price"/>
+                <TableColumn fx:id="imagePathColumn" minWidth="0.0" prefWidth="127.0" text="Image path"/>
+            </columns>
+            <VBox.margin>
+                <Insets top="5.0"/>
+            </VBox.margin>
+        </TableView>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+            <children>
+                <Button fx:id="addButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Add" textFill="WHITE"/>
+                <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Delete"
+                        textFill="WHITE"/>
+            </children>
+            <VBox.margin>
+                <Insets/>
+            </VBox.margin>
+        </HBox>
+    </children>
+</VBox>

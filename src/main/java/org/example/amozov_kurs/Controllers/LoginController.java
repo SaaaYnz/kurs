@@ -34,7 +34,7 @@ public class LoginController {
 
     @FXML
     public void initialize() {
-        // Инициализация (если нужна)
+
     }
 
     @FXML
@@ -61,19 +61,18 @@ public class LoginController {
         Stage stage = (Stage) PasswordField.getScene().getWindow();
         Parent root;
         String title;
-
         switch (role.toLowerCase()) {
             case "admin":
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main_window.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));
                 title = "Admin Panel";
                 break;
             case "employee":
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main_window.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));
                 title = "Consultant Panel";
                 break;
             case "client":
             default:
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main_window.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));
                 title = "Client Panel";
                 break;
         }

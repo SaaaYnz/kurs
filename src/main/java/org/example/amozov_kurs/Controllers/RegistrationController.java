@@ -88,7 +88,7 @@ public class RegistrationController {
 
     private void openMainWindow() throws IOException {
         Stage stage = (Stage) FirstNameField.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/main_window.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/main-window.fxml"));
         Parent root = loader.load();
         stage.setTitle("Новое окно");
         stage.setScene(new Scene(root));

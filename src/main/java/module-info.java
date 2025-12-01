@@ -4,6 +4,8 @@ module org.example.amozov_kurs {
     requires java.sql;
     requires javafx.graphics;
     requires java.desktop;
+    //requires javafx.scene.control;
+//    requires org.example.amozov_kurs;
 
 
     opens org.example.amozov_kurs to javafx.fxml;
