@@ -81,7 +81,8 @@ public class RegistrationController {
         Stage stage = (Stage) FirstNameField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/login.fxml"));
         Parent root = loader.load();
-        stage.setTitle("");
+        stage.centerOnScreen();
+        stage.setTitle("Authorization");
         stage.setScene(new Scene(root));
         stage.show();
     }
@@ -90,7 +91,7 @@ public class RegistrationController {
         Stage stage = (Stage) FirstNameField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/main-window.fxml"));
         Parent root = loader.load();
-        stage.setTitle("Новое окно");
+        stage.setTitle("Catalog");
         stage.setScene(new Scene(root));
         stage.show();
     }

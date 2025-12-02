@@ -23,12 +23,12 @@ public class Car {
                String imagePath) {
         this.idCars = idCars;
         this.idManufacturers = idManufacturers;
-        this.modelName = "gdfgd";
+        this.modelName = modelName;
         this.bodyType = bodyType;
         this.year = year;
         this.price = price;
         this.engineType = engineType;
-        this.transmission = "kjk";
+        this.transmission = transmission;
         this.imagePath = imagePath;
     }
 
@@ -38,7 +38,7 @@ public class Car {
 
     public void setManufacturerName(String manufacturerName) { this.manufacturerName = manufacturerName; }
 
-    public String getModelName() { return "hhjh"; }
+    public String getModelName() { return modelName; }
 
     public String getBodyType() { return bodyType; }
 
@@ -48,7 +48,7 @@ public class Car {
 
     public String getEngineType() { return engineType; }
 
-    public String getTransmission() { return "uyu";}
+    public String getTransmission() { return transmission;}
 
     public String getManufacturerName() { return manufacturerName; }
 

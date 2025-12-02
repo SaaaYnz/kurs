@@ -76,6 +76,7 @@ public class MainController implements Initializable {
         Stage stage = (Stage) searchField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/admin-panel.fxml"));
         Parent root = loader.load();
+        stage.centerOnScreen();
         stage.setTitle("Admin-panel");
         stage.setScene(new Scene(root));
         stage.show();

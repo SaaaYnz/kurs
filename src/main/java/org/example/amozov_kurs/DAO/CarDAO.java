@@ -34,12 +34,27 @@ public class CarDAO {
 
                 cars.add(car);
             }
+            System.out.println(cars);
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return cars;
     }
+
+//    public static void addCar(Integer idManufacturers, String model, String bodyType, Integer year, String engineType, String transmission, Integer price, String imagePath) {
+//        String sql = "INSERT INTO cars (id_manufacturers, model, body_type, year, engine_type, transmission, price, image_path) values(?, ?, ?, ?, ?, ?, ?, ?)";
+//
+//        try (Connection conn = DbConnection.getConnection();
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setInt(idManufacturers);
+//
+//
+//        } catch (SQLException e) {
+//            throw new RuntimeException(e);
+//        }
+//    }
 
     public static List<Car> searchCars(String query) {
         List<Car> cars = new ArrayList<>();

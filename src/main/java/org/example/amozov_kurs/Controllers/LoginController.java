@@ -63,7 +63,7 @@ public class LoginController {
         String title;
         switch (role.toLowerCase()) {
             case "admin":
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));
+                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/admin-panel.fxml")));
                 title = "Admin Panel";
                 break;
             case "employee":
@@ -87,6 +87,7 @@ public class LoginController {
         Stage stage = (Stage) PasswordField.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/registration.fxml"));
         Parent root = loader.load();
+        stage.centerOnScreen();
         stage.setTitle("Registration");
         stage.setScene(new Scene(root));
         stage.show();
