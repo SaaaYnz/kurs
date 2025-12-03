@@ -44,17 +44,17 @@
             <VBox.margin>
                 <Insets top="5.0" />
             </VBox.margin>
-         <contextMenu>
-            <ContextMenu fx:id="editContextMenu">
-              <items>
-                <MenuItem fx:id="editItem" onAction="#handleEditCar" mnemonicParsing="false" text="Edit" />
-              </items>
-            </ContextMenu>
-         </contextMenu>
+            <contextMenu>
+                <ContextMenu fx:id="editContextMenu">
+                    <items>
+                        <MenuItem fx:id="editItem" mnemonicParsing="false" onAction="#handleEditCar" text="Edit" />
+                    </items>
+                </ContextMenu>
+            </contextMenu>
         </TableView>
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
             <children>
-                <Button fx:id="addButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Add" textFill="WHITE" />
+                <Button fx:id="addButton" onAction="#handleAddCar" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Add" textFill="WHITE" />
                 <Button fx:id="deleteButton" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Delete" textFill="WHITE" />
             </children>
             <VBox.margin>

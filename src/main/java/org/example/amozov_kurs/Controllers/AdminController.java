@@ -64,8 +64,10 @@ public class AdminController {
     }
 
     private void loadCarData() {
-        carData.setAll(CarDAO.loadCars());
+        carData.clear();
+        carData.addAll(CarDAO.loadCars());
         carTable.setItems(carData);
+        carTable.refresh();
     }
 
     private void setupTableColumn() {
@@ -142,7 +144,7 @@ public class AdminController {
 
     @FXML
     private void handleAddCar() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/add.fxml"));
         Stage editStage = new Stage();
         editStage.setScene(new Scene(loader.load()));
 
