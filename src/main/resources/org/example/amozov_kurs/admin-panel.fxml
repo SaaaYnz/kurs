@@ -47,7 +47,7 @@
          <contextMenu>
             <ContextMenu fx:id="editContextMenu">
               <items>
-                <MenuItem fx:id="editItem" onAction="#openEditWindow" mnemonicParsing="false" text="Edit" />
+                <MenuItem fx:id="editItem" onAction="#handleEditCar" mnemonicParsing="false" text="Edit" />
               </items>
             </ContextMenu>
          </contextMenu>

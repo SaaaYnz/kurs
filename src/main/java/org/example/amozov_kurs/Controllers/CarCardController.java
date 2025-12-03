@@ -28,7 +28,7 @@ public class CarCardController {
     public void setCar(Car car) {
         this.car = car;
         titleLabel.setText(car.getManufacturerName() + " " + car.getModelName() + " " + car.getYear());
-        priceLabel.setText(car.getPrice() + " Р");
+        priceLabel.setText(car.getPrice() + " R");
         specsLabel.setText(car.getBodyType() + " • " + car.getEngineType() + " • " + car.getTransmission());
         loadCarImage();
     }

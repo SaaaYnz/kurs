@@ -95,13 +95,61 @@ public class AdminController {
     }
 
     @FXML
-    private void openEditWindow() throws IOException {
-        Stage stage = (Stage) carTable.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
-        Parent root = loader.load();
-        stage.centerOnScreen();
-        stage.setTitle("Edit");
-        stage.setScene(new Scene(root));
-        stage.show();
+    private void handleEditCar() throws IOException {
+        Car selectedCar = carTable.getSelectionModel().getSelectedItem();
+
+        Stage currentStage = (Stage) carTable.getScene().getWindow();
+
+        FXMLLoader editLoader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
+        Stage editStage = new Stage();
+        editStage.setScene(new Scene(editLoader.load()));
+
+        EditController editController = editLoader.getController();
+        editController.setCar(selectedCar);
+
+        editStage.setTitle("Editing car");
+
+        editStage.showAndWait();
+
+        recreateAdminWindow(currentStage);
     }
+
+    private void recreateAdminWindow(Stage oldStage) {
+        try {
+            oldStage.close();
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/admin-panel.fxml"));
+            Parent root = loader.load();
+
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Admin-panel");
+            newStage.show();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            showAlert("Error", "couldn't update the window");
+        }
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleAddCar() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
+        Stage editStage = new Stage();
+        editStage.setScene(new Scene(loader.load()));
+
+        editStage.setTitle("Add car");
+        editStage.showAndWait();
+
+        loadCarData();
+    }
+
 }

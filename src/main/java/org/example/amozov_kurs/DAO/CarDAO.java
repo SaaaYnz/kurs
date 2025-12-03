@@ -42,19 +42,93 @@ public class CarDAO {
         return cars;
     }
 
-//    public static void addCar(Integer idManufacturers, String model, String bodyType, Integer year, String engineType, String transmission, Integer price, String imagePath) {
-//        String sql = "INSERT INTO cars (id_manufacturers, model, body_type, year, engine_type, transmission, price, image_path) values(?, ?, ?, ?, ?, ?, ?, ?)";
-//
-//        try (Connection conn = DbConnection.getConnection();
-//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//
-//            pstmt.setInt(idManufacturers);
-//
-//
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
+    public static boolean updateCar(Car car) {
+        String sql = "UPDATE cars SET " +
+                "id_manufacturers = ?, " +
+                "model = ?, " +
+                "body_type = ?, " +
+                "year = ?, " +
+                "price = ?, " +
+                "engine_type = ?, " +
+                "transmission = ?, " +
+                "image_path = ? " +
+                "WHERE id_cars = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, car.getIdManufacturers());
+            stmt.setString(2, car.getModelName());
+            stmt.setString(3, car.getBodyType());
+            stmt.setInt(4, car.getYear());
+            stmt.setInt(5, car.getPrice());
+            stmt.setString(6, car.getEngineType());
+            stmt.setString(7, car.getTransmission());
+            stmt.setString(8, car.getImagePath());
+            stmt.setInt(9, car.getIdCars());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean addCar(Car car) {
+        String sql = "INSERT INTO cars (id_manufacturers, model, body_type, year, price, engine_type, transmission, image_path) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, car.getIdManufacturers());
+            stmt.setString(2, car.getModelName());
+            stmt.setString(3, car.getBodyType());
+            stmt.setInt(4, car.getYear());
+            stmt.setInt(5, car.getPrice());
+            stmt.setString(6, car.getEngineType());
+            stmt.setString(7, car.getTransmission());
+            stmt.setString(8, car.getImagePath());
+
+            return stmt.executeUpdate() > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static Car getCarById(int carId) {
+        String sql = "SELECT c.*, m.name " +
+                "FROM cars c " +
+                "JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers " +
+                "WHERE c.id_cars = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, carId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Car car = new Car(
+                            rs.getInt("id_cars"),
+                            rs.getInt("id_manufacturers"),
+                            rs.getString("model"),
+                            rs.getString("body_type"),
+                            rs.getInt("year"),
+                            rs.getInt("price"),
+                            rs.getString("engine_type"),
+                            rs.getString("transmission"),
+                            rs.getString("image_path")
+                    );
+                    car.setManufacturerName(rs.getString("name"));
+                    return car;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public static List<Car> searchCars(String query) {
         List<Car> cars = new ArrayList<>();
