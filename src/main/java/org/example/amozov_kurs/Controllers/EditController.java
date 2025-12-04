@@ -71,10 +71,11 @@ public class EditController {
                 transmissionField.getText(),
                 selectedImagePath != null ? selectedImagePath : currentCar.getImagePath()
         );
-
+        //System.out.println(selectedImagePath);
         boolean success = CarDAO.updateCar(updatedCar);
         if (success) {
             closeWindow();
+//            System.out.println);
         }
     }
 
@@ -126,6 +127,8 @@ public class EditController {
         }
 
         Files.copy(sourceFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+
 
         return fileName;
     }

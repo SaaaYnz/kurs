@@ -30,6 +30,7 @@
                 </Label>
             </children>
         </HBox>
+
         <TableView fx:id="carTable" prefHeight="482.0" prefWidth="1016.0">
             <columns>
                 <TableColumn fx:id="manufactureColumn" prefWidth="125.0" text="Manufacture" />

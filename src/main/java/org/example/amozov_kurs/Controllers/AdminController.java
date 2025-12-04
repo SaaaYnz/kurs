@@ -12,14 +12,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import org.example.amozov_kurs.Models.Car;
 import org.example.amozov_kurs.DAO.CarDAO;
 
+import java.io.File;
 import java.io.IOException;
 
 public class AdminController {
 
+    public Label labelText;
     @FXML
     private ContextMenu editContextMenu;
 
@@ -36,7 +40,7 @@ public class AdminController {
     private Button deleteButton;
 
     @FXML
-    private TableView<Car> carTable;
+    public TableView<Car> carTable;
 
     @FXML
     private TableColumn<Car, String> manufactureColumn;
@@ -59,18 +63,23 @@ public class AdminController {
 
     @FXML
     public void initialize() {
+
         setupTableColumn();
         loadCarData();
+
+
     }
 
-    private void loadCarData() {
+    public void loadCarData() {
         carData.clear();
         carData.addAll(CarDAO.loadCars());
         carTable.setItems(carData);
         carTable.refresh();
+
     }
 
-    private void setupTableColumn() {
+    public void setupTableColumn() {
+
         manufactureColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturerName"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("modelName"));
         bodyTypeColumn.setCellValueFactory(new PropertyValueFactory<>("bodyType"));
@@ -78,9 +87,23 @@ public class AdminController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         transmissionColumn.setCellValueFactory(new PropertyValueFactory<>("transmission"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+//        imagePathColumn.setCellValueFactory(p -> {
+//            String url = getClass().getResource("/org/example/amozov_kurs/image/") + p.getValue().getImagePath();
+//            Image image = new Image(url, 133, 80, false, true, true);
+//
+//            return new ReadOnlyObjectWrapper<>(new ImageView(image));
+
         imagePathColumn.setCellValueFactory(p -> {
-            String url = getClass().getResource("/org/example/amozov_kurs/image/") + p.getValue().getImagePath();
-            Image image = new Image(url, 133, 80, false, true, true);
+            String fileName = p.getValue().getImagePath();
+
+            File file = new File("src/main/resources/org/example/amozov_kurs/image/" + fileName); // ❗ папка, куда ты сохраняешь картинки
+            if (!file.exists()) {
+                return new ReadOnlyObjectWrapper<>(new ImageView());
+            }
+
+            String uri = file.toURI().toString() + "?v=" + System.currentTimeMillis();
+            Image image = new Image(uri, 133, 80, false, true);
+
             return new ReadOnlyObjectWrapper<>(new ImageView(image));
         });
     }
@@ -104,6 +127,7 @@ public class AdminController {
 
         FXMLLoader editLoader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
         Stage editStage = new Stage();
+        editStage.initModality(Modality.APPLICATION_MODAL);
         editStage.setScene(new Scene(editLoader.load()));
 
         EditController editController = editLoader.getController();
@@ -111,9 +135,20 @@ public class AdminController {
 
         editStage.setTitle("Editing car");
 
+
+
         editStage.showAndWait();
 
-        recreateAdminWindow(currentStage);
+        setupTableColumn();
+        loadCarData();
+        carTable.refresh();
+
+
+
+
+      //  recreateAdminWindow(currentStage);
+
+       // initialize();
     }
 
     private void recreateAdminWindow(Stage oldStage) {
