@@ -74,6 +74,23 @@ public class CarDAO {
         }
     }
 
+    public static List<String> getAllImages() {
+        List<String> manufacturers = new ArrayList<>();
+        String sql = "SELECT DISTINCT image_path FROM cars ORDER BY image_path";
+
+        try (Connection conn = DbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) {
+                manufacturers.add(rs.getString("image_path"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return manufacturers;
+    }
+
     public static boolean addCar(Car car) {
         String sql = "INSERT INTO cars (id_manufacturers, model, body_type, year, price, engine_type, transmission, image_path) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
@@ -93,6 +110,22 @@ public class CarDAO {
             return stmt.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean deleteCar(Integer carId) {
+        String sql = "DELETE FROM cars WHERE id_cars = ?";
+
+        try (Connection conn = DbConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, carId);
+            int rowsAffected = pstmt.executeUpdate();
+
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
             return false;
         }
     }

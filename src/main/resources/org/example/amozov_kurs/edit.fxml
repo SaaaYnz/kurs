@@ -16,11 +16,7 @@
                 <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                     <children>
                         <ImageView fx:id="carImagePath" fitHeight="278.0" fitWidth="279.0" pickOnBounds="true" preserveRatio="true" />
-                  <TextField fx:id="imagePathField" maxWidth="200.0" minHeight="30.0" minWidth="200.0" prefWidth="200.0" promptText="Image..." style="-fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #0fb7ff;">
-                     <VBox.margin>
-                        <Insets top="20.0" />
-                     </VBox.margin>
-                  </TextField>
+                  <ChoiceBox fx:id="imageChoice" minHeight="30.0" prefHeight="24.0" prefWidth="200.0" style="-fx-background-radius: 15; -fx-background-color: white; -fx-border-color: #0fb7ff; -fx-border-radius: 15;" />
                         <Button fx:id="chooseButton" mnemonicParsing="false" onAction="#chooseImage" prefHeight="30.0" prefWidth="135.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Choose image" textFill="WHITE">
                             <font>
                                 <Font size="15.0" />

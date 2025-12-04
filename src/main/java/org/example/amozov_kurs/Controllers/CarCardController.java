@@ -8,6 +8,7 @@ import javafx.scene.image.ImageView;
 import org.example.amozov_kurs.Models.Car;
 
 import java.awt.*;
+import java.io.File;
 import java.io.InputStream;
 
 public class CarCardController {
@@ -38,17 +39,21 @@ public class CarCardController {
             String imageName = car.getImagePath();
 
             if (imageName != null && !imageName.trim().isEmpty()) {
-                String imagePath = "/org/example/amozov_kurs/image/" + imageName;
+                File file = new File("src/main/resources/org/example/amozov_kurs/image/" + imageName);
 
-                InputStream stream = getClass().getResourceAsStream(imagePath);
-                if (stream != null) {
-                    Image image = new Image(stream);
+                if (file.exists()) {
+                    String uri = file.toURI().toString();
+                    Image image = new Image(uri);
                     carImage.setImage(image);
+                } else {
+                    carImage.setImage(null);
                 }
+            } else {
+                carImage.setImage(null);
             }
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-
+            System.out.println("Ошибка загрузки изображения: " + e.getMessage());
+            carImage.setImage(null);
         }
     }
 

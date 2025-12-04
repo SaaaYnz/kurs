@@ -20,6 +20,7 @@ import org.example.amozov_kurs.DAO.CarDAO;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 public class AdminController {
 
@@ -87,24 +88,20 @@ public class AdminController {
         priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         transmissionColumn.setCellValueFactory(new PropertyValueFactory<>("transmission"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
-//        imagePathColumn.setCellValueFactory(p -> {
-//            String url = getClass().getResource("/org/example/amozov_kurs/image/") + p.getValue().getImagePath();
-//            Image image = new Image(url, 133, 80, false, true, true);
-//
-//            return new ReadOnlyObjectWrapper<>(new ImageView(image));
-
         imagePathColumn.setCellValueFactory(p -> {
             String fileName = p.getValue().getImagePath();
 
-            File file = new File("src/main/resources/org/example/amozov_kurs/image/" + fileName); // ❗ папка, куда ты сохраняешь картинки
-            if (!file.exists()) {
-                return new ReadOnlyObjectWrapper<>(new ImageView());
+            if (fileName != null && !fileName.isEmpty()) {
+                try {
+                    File file = new File("src/main/resources/org/example/amozov_kurs/image/" + fileName);
+                    String uri = file.toURI().toString();
+                    Image image = new Image(uri, 133, 80, false, true);
+                    return new ReadOnlyObjectWrapper<>(new ImageView(image));
+                } catch (Exception e) {
+
+                }
             }
-
-            String uri = file.toURI().toString() + "?v=" + System.currentTimeMillis();
-            Image image = new Image(uri, 133, 80, false, true);
-
-            return new ReadOnlyObjectWrapper<>(new ImageView(image));
+            return new ReadOnlyObjectWrapper<>(new ImageView());
         });
     }
 
@@ -130,44 +127,21 @@ public class AdminController {
         editStage.initModality(Modality.APPLICATION_MODAL);
         editStage.setScene(new Scene(editLoader.load()));
 
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
+        editStage.getIcons().add(icon);
+
         EditController editController = editLoader.getController();
         editController.setCar(selectedCar);
 
         editStage.setTitle("Editing car");
-
-
 
         editStage.showAndWait();
 
         setupTableColumn();
         loadCarData();
         carTable.refresh();
-
-
-
-
-      //  recreateAdminWindow(currentStage);
-
-       // initialize();
     }
 
-    private void recreateAdminWindow(Stage oldStage) {
-        try {
-            oldStage.close();
-
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/admin-panel.fxml"));
-            Parent root = loader.load();
-
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.setTitle("Admin-panel");
-            newStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            showAlert("Error", "couldn't update the window");
-        }
-    }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -180,13 +154,35 @@ public class AdminController {
     @FXML
     private void handleAddCar() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/add.fxml"));
-        Stage editStage = new Stage();
-        editStage.setScene(new Scene(loader.load()));
-
-        editStage.setTitle("Add car");
-        editStage.showAndWait();
+        Stage addStage = new Stage();
+        addStage.setScene(new Scene(loader.load()));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
+        addStage.getIcons().add(icon);
+        addStage.setTitle("Add car");
+        addStage.showAndWait();
 
         loadCarData();
     }
 
+    @FXML
+    private void handleDeleteCar() {
+        Car selectedCar = carTable.getSelectionModel().getSelectedItem();
+
+        if (selectedCar == null) {
+            return;
+        }
+
+        try {
+            boolean success = CarDAO.deleteCar(selectedCar.getIdCars());
+
+            if (success) {
+                carTable.getItems().remove(selectedCar);
+                System.out.println("Автомобиль успешно удален");
+            } else {
+                System.out.println("Не удалось удалить автомобиль");
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка при удалении: " + e.getMessage());
+        }
+    }
 }

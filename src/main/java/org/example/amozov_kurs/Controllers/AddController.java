@@ -15,12 +15,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.util.List;
 
 public class AddController {
 
     @FXML private ImageView carImagePath;
     @FXML private ChoiceBox<String> manufactureChoice;
+    @FXML private ChoiceBox<String> imageChoice;
     @FXML private TextField modelField;
     @FXML private TextField bodyTypeField;
     @FXML private TextField yearField;
@@ -32,96 +32,45 @@ public class AddController {
 
     private Car currentCar;
     private String selectedImagePath;
-    private File selectedImageFile;  // Добавьте это поле
-    private Image selectedImage;
-
-    @FXML
-    private String selectedImageName = ""; // Инициализируем пустой строкой
 
     @FXML
     public void initialize() {
-        List<String> manufacturers = ManufacturerDAO.getAllManufacturers();
-        manufactureChoice.getItems().addAll(manufacturers);
-        if (!manufacturers.isEmpty()) {
-            manufactureChoice.setValue(manufacturers.get(0));
-        }
+        manufactureChoice.getItems().addAll(ManufacturerDAO.getAllManufacturers());
+        imageChoice.getItems().addAll(CarDAO.getAllImages());
+
+        imageChoice.setOnAction(event -> handleImageChoice());
     }
 
-    public void setCar(Car car) {
-        this.currentCar = car;
+    @FXML
+    private void handleImageChoice() {
+        String selectedImageName = imageChoice.getValue();
 
-        if (car != null) {
-            manufactureChoice.setValue(car.getManufacturerName());
-            modelField.setText(car.getModelName());
-            bodyTypeField.setText(car.getBodyType());
-            yearField.setText(String.valueOf(car.getYear()));
-            engineTypeField.setText(car.getEngineType());
-            transmissionField.setText(car.getTransmission());
-            priceField.setText(String.valueOf(car.getPrice()));
+        if (selectedImageName != null && !selectedImageName.isEmpty()) {
 
-            if (car.getImagePath() != null) {
-                loadImage(car.getImagePath());
-            }
+            loadImage(selectedImageName);
+
+            selectedImagePath = selectedImageName;
         }
     }
 
     @FXML
     private void handleSave() {
-        if (modelField.getText().isEmpty() || yearField.getText().isEmpty() || priceField.getText().isEmpty()) {
-            showAlert("Error", "Fill required fields");
-            return;
-        }
-
         Integer manufacturerId = ManufacturerDAO.getManufacturerIdByName(manufactureChoice.getValue());
-        if (manufacturerId == null) return;
-
-        try {
-            Car newCar = new Car(
-                    null,
-                    manufacturerId,
-                    modelField.getText(),
-                    bodyTypeField.getText(),
-                    Integer.parseInt(yearField.getText()),
-                    Integer.parseInt(priceField.getText()),
-                    engineTypeField.getText(),
-                    transmissionField.getText(),
-                    selectedImageName.isEmpty() ? null : selectedImageName // Если пусто - null, иначе имя файла
-            );
-
-            System.out.println("Saving car with image: " + selectedImageName); // Для отладки
-
-            boolean success = CarDAO.addCar(newCar);
-            if (success) {
-                showAlert("Success", "Car added successfully");
-                closeWindow();
-            } else {
-                showAlert("Error", "Failed to add car");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            showAlert("Error", "Error: " + e.getMessage());
+        Car addedCar = new Car(
+                null,
+                manufacturerId,
+                modelField.getText(),
+                bodyTypeField.getText(),
+                Integer.parseInt(yearField.getText()),
+                Integer.parseInt(priceField.getText()),
+                engineTypeField.getText(),
+                transmissionField.getText(),
+                selectedImagePath != null ? selectedImagePath : currentCar.getImagePath()
+        );
+        boolean success = CarDAO.addCar(addedCar);
+        if (success) {
+            closeWindow();
         }
-    }
-    private String saveImageToProject() throws IOException {
-        if (selectedImage == null) {
-            return null;
-        }
-
-        // Создаем уникальное имя файла
-        String fileName = "car_" + System.currentTimeMillis() + ".png";
-        String projectImageDir = "src/main/resources/org/example/amozov_kurs/image/";
-
-        // Создаем папку если нет
-        File dir = new File(projectImageDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-
-        String fullPath = projectImageDir + fileName;
-
-        // Сохраняем изображение (в реальном приложении нужна более сложная логика)
-        // Здесь просто возвращаем имя файла, так как мы уже скопировали файл в chooseImage()
-        return fileName;
     }
 
     @FXML
@@ -134,7 +83,7 @@ public class AddController {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Change image");
         fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Images", "*.png", "*.jpg", "*.jpeg")
+                new FileChooser.ExtensionFilter("Изображения", "*.png", "*.jpg", "*.jpeg")
         );
 
         Stage stage = (Stage) carImagePath.getScene().getWindow();
@@ -145,9 +94,8 @@ public class AddController {
                 Image preview = new Image(selectedFile.toURI().toString());
                 carImagePath.setImage(preview);
 
-                // Сохраняем имя файла
-                selectedImageName = copyImageToProject(selectedFile);
-                System.out.println("Image saved as: " + selectedImageName);
+                selectedImagePath = copyImageToProject(selectedFile);
+
 
             } catch (Exception e) {
                 System.out.println("Error: " + e.getMessage());
@@ -174,18 +122,34 @@ public class AddController {
 
         Files.copy(sourceFile.toPath(), destination.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
+
+
         return fileName;
     }
 
     private void loadImage(String imageName) {
         try {
+            if (imageName == null || imageName.trim().isEmpty()) {
+                carImagePath.setImage(null);
+                return;
+            }
             InputStream stream = getClass().getResourceAsStream("/org/example/amozov_kurs/image/" + imageName);
             if (stream != null) {
                 Image image = new Image(stream);
                 carImagePath.setImage(image);
+                stream.close();
+            } else {
+                File file = new File("src/main/resources/org/example/amozov_kurs/image/" + imageName);
+                if (file.exists()) {
+                    String uri = file.toURI().toString();
+                    Image image = new Image(uri);
+                    carImagePath.setImage(image);
+                } else {
+                    carImagePath.setImage(null);
+                }
             }
         } catch (Exception e) {
-            System.out.println("Couldn't save image: " + imageName);
+            carImagePath.setImage(null);
         }
     }
 

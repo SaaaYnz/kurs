@@ -20,13 +20,13 @@ public class EditController {
 
     @FXML private ImageView carImagePath;
     @FXML private ChoiceBox<String> manufactureChoice;
+    @FXML private ChoiceBox<String> imageChoice;
     @FXML private TextField modelField;
     @FXML private TextField bodyTypeField;
     @FXML private TextField yearField;
     @FXML private TextField engineTypeField;
     @FXML private TextField transmissionField;
     @FXML private TextField priceField;
-    @FXML private TextField imagePathField;
     @FXML private Button saveButton;
     @FXML private Button cancelButton;
 
@@ -36,6 +36,21 @@ public class EditController {
     @FXML
     public void initialize() {
         manufactureChoice.getItems().addAll(ManufacturerDAO.getAllManufacturers());
+        imageChoice.getItems().addAll(CarDAO.getAllImages());
+
+        imageChoice.setOnAction(event -> handleImageChoice());
+    }
+
+    @FXML
+    private void handleImageChoice() {
+        String selectedImageName = imageChoice.getValue();
+
+        if (selectedImageName != null && !selectedImageName.isEmpty()) {
+
+            loadImage(selectedImageName);
+
+            selectedImagePath = selectedImageName;
+        }
     }
 
     public void setCar(Car car) {
@@ -49,10 +64,12 @@ public class EditController {
             engineTypeField.setText(car.getEngineType());
             transmissionField.setText(car.getTransmission());
             priceField.setText(String.valueOf(car.getPrice()));
-            imagePathField.setText(car.getImagePath());
 
+            // Устанавливаем изображение в ChoiceBox если оно есть
             if (car.getImagePath() != null) {
+                imageChoice.setValue(car.getImagePath());
                 loadImage(car.getImagePath());
+                selectedImagePath = car.getImagePath();
             }
         }
     }
@@ -135,13 +152,27 @@ public class EditController {
 
     private void loadImage(String imageName) {
         try {
+            if (imageName == null || imageName.trim().isEmpty()) {
+                carImagePath.setImage(null);
+                return;
+            }
             InputStream stream = getClass().getResourceAsStream("/org/example/amozov_kurs/image/" + imageName);
             if (stream != null) {
                 Image image = new Image(stream);
                 carImagePath.setImage(image);
+                stream.close();
+            } else {
+                File file = new File("src/main/resources/org/example/amozov_kurs/image/" + imageName);
+                if (file.exists()) {
+                    String uri = file.toURI().toString();
+                    Image image = new Image(uri);
+                    carImagePath.setImage(image);
+                } else {
+                    carImagePath.setImage(null);
+                }
             }
         } catch (Exception e) {
-            System.out.println("Couldn't save image: " + imageName);
+            carImagePath.setImage(null);
         }
     }
 
