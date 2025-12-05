@@ -138,7 +138,9 @@ public class DetailController {
 
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
-        stage.show();
+        stage.showAndWait();
+
+        closeWindow();
     }
 
     private void showError(String msg) {
@@ -148,5 +150,6 @@ public class DetailController {
         alert.setContentText(msg);
         alert.showAndWait();
     }
+
 }
 

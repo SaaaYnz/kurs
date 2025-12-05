@@ -65,7 +65,6 @@ public class CarCardController {
         DetailController controller = detailLoader.getController();
         controller.setCar(car);
 
-        // передаём текущего пользователя
         controller.initialize();
 
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));

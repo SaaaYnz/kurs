@@ -14,12 +14,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.Window;
+import org.example.amozov_kurs.DAO.DbConnection;
 import org.example.amozov_kurs.Models.Car;
 import org.example.amozov_kurs.DAO.CarDAO;
+import org.example.amozov_kurs.Models.Order;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Objects;
 
 public class AdminController {
@@ -42,6 +47,9 @@ public class AdminController {
 
     @FXML
     public TableView<Car> carTable;
+
+    @FXML
+    public TableView<Order> orderTable;
 
     @FXML
     private TableColumn<Car, String> manufactureColumn;
@@ -68,7 +76,6 @@ public class AdminController {
         setupTableColumn();
         loadCarData();
 
-
     }
 
     public void loadCarData() {
@@ -77,6 +84,23 @@ public class AdminController {
         carTable.setItems(carData);
         carTable.refresh();
 
+    }
+
+
+    public void showCarsTable() {
+        carTable.setVisible(true);
+        carTable.setManaged(true);
+
+        orderTable.setVisible(false);
+        orderTable.setManaged(false);
+    }
+
+    public void showOrdersTable() {
+        carTable.setVisible(false);
+        carTable.setManaged(false);
+
+        orderTable.setVisible(true);
+        orderTable.setManaged(true);
     }
 
     public void setupTableColumn() {
@@ -104,6 +128,7 @@ public class AdminController {
             return new ReadOnlyObjectWrapper<>(new ImageView());
         });
     }
+
 
     @FXML
     private void openMainWindow() throws IOException {

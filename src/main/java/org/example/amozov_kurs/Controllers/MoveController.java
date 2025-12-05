@@ -1,9 +1,11 @@
 package org.example.amozov_kurs.Controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.example.amozov_kurs.DAO.ServiceDAO;
 import org.example.amozov_kurs.Models.Service;
@@ -60,7 +62,7 @@ public class MoveController {
         LocalDate date = datePick.getValue();
 
         if (selectedService == null || date == null) {
-            System.out.println("Заполните все поля!");
+            showAlert("Error", "");
             return;
         }
 
@@ -71,6 +73,20 @@ public class MoveController {
                 date
         );
 
-        System.out.println("Заказ успешно создан!");
+        showAlert("Order", "we will contact you");
+        closeWindow();
+    }
+
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void closeWindow() {
+        Stage stage = (Stage) saveButton.getScene().getWindow();
+        stage.close();
     }
 }

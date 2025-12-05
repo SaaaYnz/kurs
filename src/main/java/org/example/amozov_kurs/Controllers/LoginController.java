@@ -68,10 +68,6 @@ public class LoginController {
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/admin-panel.fxml")));
                 title = "Admin Panel";
                 break;
-            case "employee":
-                root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));
-                title = "Consultant Panel";
-                break;
             case "client":
             default:
                 root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/org/example/amozov_kurs/main-window.fxml")));

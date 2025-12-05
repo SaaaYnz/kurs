@@ -1,66 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ContextMenu?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="643.0" prefWidth="1034.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.AdminController">
+<VBox xmlns="http://javafx.com/javafx/25"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.example.amozov_kurs.Controllers.AdminController"
+      prefHeight="643.0" prefWidth="1034.0">
+
     <children>
-        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+
+        <!-- Верхняя панель -->
+        <HBox alignment="CENTER_LEFT" prefHeight="80">
             <children>
-                <Button fx:id="backButton" mnemonicParsing="false" onAction="#openMainWindow" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Back" textFill="WHITE">
+                <Button fx:id="backButton" text="Back" onAction="#openMainWindow"
+                        prefHeight="30" prefWidth="90"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" textFill="WHITE">
                     <HBox.margin>
-                        <Insets left="15.0" />
+                        <Insets left="15"/>
                     </HBox.margin>
                 </Button>
+
                 <Label text="Admin panel">
                     <font>
-                        <Font name="System Bold" size="28.0" />
+                        <Font name="System Bold" size="28"/>
                     </font>
                     <HBox.margin>
-                        <Insets left="25.0" />
+                        <Insets left="25"/>
                     </HBox.margin>
                 </Label>
             </children>
         </HBox>
 
-        <TableView fx:id="carTable" prefHeight="482.0" prefWidth="1016.0">
+        <HBox alignment="CENTER" spacing="15" prefHeight="60">
+            <children>
+                <Button text="Cars" fx:id="carsButton" onAction="#showCarsTable"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;"
+                        textFill="WHITE" prefWidth="120" prefHeight="30"/>
+
+                <Button text="Users" fx:id="usersButton" onAction="#showOrdersTable"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;"
+                        textFill="WHITE" prefWidth="120" prefHeight="30"/>
+            </children>
+        </HBox>
+
+        <TableView fx:id="carTable" prefHeight="420" prefWidth="1000">
             <columns>
-                <TableColumn fx:id="manufactureColumn" prefWidth="125.0" text="Manufacture" />
-                <TableColumn fx:id="modelColumn" minWidth="0.0" prefWidth="127.0" text="Model" />
-                <TableColumn fx:id="bodyTypeColumn" minWidth="0.0" prefWidth="127.0" text="Body type" />
-                <TableColumn fx:id="yearColumn" minWidth="0.0" prefWidth="127.0" text="Year" />
-                <TableColumn fx:id="engineTypeColumn" minWidth="0.0" prefWidth="127.0" text="Engine type" />
-                <TableColumn fx:id="transmissionColumn" minWidth="0.0" prefWidth="127.0" text="Transmission" />
-                <TableColumn fx:id="priceColumn" minWidth="0.0" prefWidth="127.0" text="Price" />
-                <TableColumn fx:id="imagePathColumn" minWidth="0.0" prefWidth="146.0" text="Image path" />
+                <TableColumn fx:id="manufactureColumn" prefWidth="125" text="Manufacture"/>
+                <TableColumn fx:id="modelColumn" prefWidth="127" text="Model"/>
+                <TableColumn fx:id="bodyTypeColumn" prefWidth="127" text="Body type"/>
+                <TableColumn fx:id="yearColumn" prefWidth="127" text="Year"/>
+                <TableColumn fx:id="engineTypeColumn" prefWidth="127" text="Engine type"/>
+                <TableColumn fx:id="transmissionColumn" prefWidth="127" text="Transmission"/>
+                <TableColumn fx:id="priceColumn" prefWidth="127" text="Price"/>
+                <TableColumn fx:id="imagePathColumn" prefWidth="146" text="Image path"/>
             </columns>
-            <VBox.margin>
-                <Insets top="5.0" />
-            </VBox.margin>
+
             <contextMenu>
-                <ContextMenu fx:id="editContextMenu">
+                <ContextMenu fx:id="carContextMenu">
                     <items>
-                        <MenuItem fx:id="editItem" mnemonicParsing="false" onAction="#handleEditCar" text="Edit" />
+                        <MenuItem text="Edit" fx:id="editItem" onAction="#handleEditCar"/>
                     </items>
                 </ContextMenu>
             </contextMenu>
         </TableView>
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+
+        <TableView fx:id="orderTable" prefHeight="420" prefWidth="1000"
+                   visible="false" managed="false">
+            <columns>
+                <TableColumn fx:id="orderIdColumn" prefWidth="80" text="Order ID"/>
+                <TableColumn fx:id="carNameColumn" prefWidth="180" text="Car"/>
+                <TableColumn fx:id="userNameColumn" prefWidth="180" text="User"/>
+                <TableColumn fx:id="serviceNameColumn" prefWidth="180" text="Service"/>
+                <TableColumn fx:id="orderDateColumn" prefWidth="120" text="Order Date"/>
+                <TableColumn fx:id="statusColumn" prefWidth="120" text="Status"/>
+            </columns>
+        </TableView>
+
+        <HBox alignment="CENTER" spacing="50" prefHeight="100">
             <children>
-                <Button fx:id="addButton" onAction="#handleAddCar" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Add" textFill="WHITE" />
-                <Button fx:id="deleteButton" onAction="#handleDeleteCar" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Delete" textFill="WHITE" />
+                <Button fx:id="addButton" text="Add" onAction="#handleAddCar"
+                        prefHeight="30" prefWidth="90"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" textFill="WHITE"/>
+
+                <Button fx:id="deleteButton" text="Delete" onAction="#handleDeleteCar"
+                        prefHeight="30" prefWidth="90"
+                        style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" textFill="WHITE"/>
             </children>
-            <VBox.margin>
-                <Insets />
-            </VBox.margin>
         </HBox>
+
     </children>
 </VBox>

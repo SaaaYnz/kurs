@@ -96,7 +96,7 @@ public class RegistrationController {
         boolean registered = userDAO.registerUser(firstName, lastName, email, login, password, birthday, phone);
         if (registered) {
             showAlert("Success", "Registration successful!");
-            openMainWindow();
+            openLoginWindow();
         } else {
             showAlert("Error", "Registration failed, please try again");
         }
@@ -113,11 +113,12 @@ public class RegistrationController {
         stage.show();
     }
 
-    private void openMainWindow() throws IOException {
+    private void openLoginWindow() throws IOException {
         Stage stage = (Stage) FirstNameField.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/main-window.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/login.fxml"));
         Parent root = loader.load();
-        stage.setTitle("Catalog");
+        stage.centerOnScreen();
+        stage.setTitle("Authorization");
         stage.setScene(new Scene(root));
         stage.show();
     }
