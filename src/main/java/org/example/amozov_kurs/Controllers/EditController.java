@@ -65,7 +65,6 @@ public class EditController {
             transmissionField.setText(car.getTransmission());
             priceField.setText(String.valueOf(car.getPrice()));
 
-            // Устанавливаем изображение в ChoiceBox если оно есть
             if (car.getImagePath() != null) {
                 imageChoice.setValue(car.getImagePath());
                 loadImage(car.getImagePath());
@@ -88,11 +87,9 @@ public class EditController {
                 transmissionField.getText(),
                 selectedImagePath != null ? selectedImagePath : currentCar.getImagePath()
         );
-        //System.out.println(selectedImagePath);
         boolean success = CarDAO.updateCar(updatedCar);
         if (success) {
             closeWindow();
-//            System.out.println);
         }
     }
 

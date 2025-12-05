@@ -8,8 +8,10 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.DAO.UserDAO;
 import org.example.amozov_kurs.Models.User;
+import org.example.amozov_kurs.Session.AuthSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Objects;
 
 public class LoginController {
@@ -38,7 +40,7 @@ public class LoginController {
     }
 
     @FXML
-    private void handleLogin() throws IOException {
+    private void handleLogin() throws IOException, SQLException, ClassNotFoundException {
         String username = LoginField.getText();
         String password = PasswordField.getText();
 
@@ -47,10 +49,10 @@ public class LoginController {
             return;
         }
 
-        User user = userDAO.validateUser(username, password);
-
+        User user = userDAO.authenticate(username, password);
         if (user != null) {
             currentUser = user;
+            AuthSession.setUser(user);
             redirectBasedOnRole(user.getRole());
         } else {
             showAlert("Error", "There is no such user");

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="745.0" prefWidth="296.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.DetailController">
+    <children>
+        <HBox prefHeight="772.0" prefWidth="299.0">
+            <children>
+                <VBox alignment="TOP_CENTER" prefHeight="717.0" prefWidth="279.0" spacing="20.0">
+                    <children>
+                        <ImageView fx:id="carImagePath" fitHeight="278.0" fitWidth="279.0" pickOnBounds="true" preserveRatio="true" />
+                      <VBox alignment="CENTER" prefHeight="459.0" prefWidth="279.0" spacing="20.0">
+                          <children>
+                              <HBox prefHeight="40.0" prefWidth="281.0" spacing="20.0">
+                                  <children>
+                                      <Label fx:id="manuifactureLabel" />
+                                      <Label fx:id="modelLabel" />
+                                      <Label fx:id="yearLabel" />
+                                  </children>
+                              </HBox>
+                              <HBox prefHeight="33.0" prefWidth="281.0" spacing="20.0">
+                                  <children>
+                                      <Label fx:id="bodyTypeLabel" />
+                                      <Label fx:id="engineTypeLabel" />
+                                      <Label fx:id="transmissionLabel" />
+                                  </children>
+                              </HBox>
+                              <HBox prefHeight="48.0" prefWidth="281.0">
+                                  <children>
+                                      <Label fx:id="priceLabel" />
+                                  </children>
+                              </HBox>
+                              <HBox alignment="TOP_CENTER" prefHeight="9.0" prefWidth="279.0" spacing="10.0">
+                                  <children>
+                                      <Button fx:id="moveButton" minHeight="30.0" mnemonicParsing="false" onAction="#handleMove" prefHeight="31.0" prefWidth="95.0" style="-fx-background-color: #0fb7ff; -fx-background-radius: 15;" text="Move" textFill="WHITE">
+                                          <font>
+                                              <Font size="15.0" />
+                                          </font>
+                                      </Button>
+                                      <Button fx:id="cancelButton" minHeight="30.0" mnemonicParsing="false" onAction="#handleCancel" prefHeight="33.0" prefWidth="95.0" style="-fx-background-color: white; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #0fb7ff;" text="Cancel" textFill="#0fb7ff">
+                                          <font>
+                                              <Font size="15.0" />
+                                          </font>
+                                      </Button>
+                                  </children>
+                              </HBox>
+                          </children>
+                      </VBox>
+                    </children>
+                    <HBox.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                    </HBox.margin>
+                </VBox>
+            </children>
+        </HBox>
+    </children>
+</VBox>

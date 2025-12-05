@@ -158,6 +158,7 @@ public class AdminController {
         addStage.setScene(new Scene(loader.load()));
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
         addStage.getIcons().add(icon);
+        addStage.initModality(Modality.APPLICATION_MODAL);
         addStage.setTitle("Add car");
         addStage.showAndWait();
 

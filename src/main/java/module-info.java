@@ -5,7 +5,10 @@ module org.example.amozov_kurs {
     requires javafx.graphics;
     requires java.desktop;
     requires javafx.base;
-    //requires javafx.scene.control;
+    requires jbcrypt;
+//    requires org.example.amozov_kurs;
+//    requires org.example.amozov_kurs;
+//    requires javafx.scene.control;
 //    requires org.example.amozov_kurs;
 
 

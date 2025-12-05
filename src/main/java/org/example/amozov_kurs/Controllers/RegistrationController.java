@@ -93,7 +93,7 @@ public class RegistrationController {
             return;
         }
 
-        boolean registered = userDAO.registerUser(firstName, lastName, email, login, password, birthday);
+        boolean registered = userDAO.registerUser(firstName, lastName, email, login, password, birthday, phone);
         if (registered) {
             showAlert("Success", "Registration successful!");
             openMainWindow();

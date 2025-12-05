@@ -7,8 +7,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.DAO.CarDAO;
 import org.example.amozov_kurs.Models.Car;
@@ -17,6 +19,7 @@ import org.example.amozov_kurs.Models.User;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
@@ -46,10 +49,9 @@ public class MainController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         User currentUser = LoginController.getCurrentUser();
+        adminButton.setVisible(false);
         if (currentUser != null && "admin".equalsIgnoreCase(currentUser.getRole())) {
             adminButton.setVisible(true);
-        } else {
-            adminButton.setVisible(false);
         }
         loadCars();
     }
