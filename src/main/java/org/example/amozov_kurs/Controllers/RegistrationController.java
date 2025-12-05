@@ -4,21 +4,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.Models.User;
 import org.example.amozov_kurs.DAO.UserDAO;
 
 import java.io.IOException;
+import java.time.LocalDate;
 
 public class RegistrationController {
-
-
-
-
 
     @FXML
     private TextField FirstNameField;
@@ -33,6 +27,9 @@ public class RegistrationController {
     private TextField LoginField;
 
     @FXML
+    private TextField phoneField;
+
+    @FXML
     private PasswordField PasswordField;
 
     @FXML
@@ -44,9 +41,10 @@ public class RegistrationController {
     @FXML
     private Button ReturnButton;
 
-    private UserDAO userDAO = new UserDAO();
-    private static User currentUser;
+    @FXML
+    private DatePicker datePick;  // DatePicker для выбора даты рождения
 
+    private UserDAO userDAO = new UserDAO();
 
     @FXML
     private void handleRegister() throws IOException {
@@ -55,10 +53,29 @@ public class RegistrationController {
         String email = EmailField.getText();
         String login = LoginField.getText();
         String password = PasswordField.getText();
+        String phone = phoneField.getText();
         String confirmPassword = ConfirmPasswordField.getText();
+        LocalDate birthday = datePick.getValue();
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || login.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() ||
+                login.isEmpty() || password.isEmpty() || confirmPassword.isEmpty() || birthday == null) {
             showAlert("Error", "Fill in all the fields");
+            return;
+        }
+
+        if (!email.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) {
+            showAlert("Error", "Invalid email");
+            return;
+        }
+
+        if (!login.matches("^[a-zA-Z0-9._-]{3,20}$")) {
+            showAlert("Error", "Invalid login (3-20 chars: a-z, 0-9, ., -, _)");
+            return;
+        }
+
+        if (!phone.isEmpty() && !phone.matches("^\\d-\\d{3}-\\d{3}-\\d{2}-\\d{2}$")) {
+            showAlert("Error", "Invalid phone format: *-***-***-**-**");
+            return;
         }
 
         if (!password.equals(confirmPassword)) {
@@ -66,14 +83,23 @@ public class RegistrationController {
             return;
         }
 
-        boolean registered = userDAO.registerUser(firstName, lastName, email, login, password);
+        if (birthday != null && birthday.isAfter(LocalDate.now())) {
+            showAlert("Error", "Birthday cannot be in the future");
+            return;
+        }
+
+        if (!isAdult(birthday)) {
+            showAlert("Error", "You must be at least 18 years old to register");
+            return;
+        }
+
+        boolean registered = userDAO.registerUser(firstName, lastName, email, login, password, birthday);
         if (registered) {
             showAlert("Success", "Registration successful!");
             openMainWindow();
         } else {
             showAlert("Error", "Registration failed, please try again");
         }
-
     }
 
     @FXML
@@ -103,5 +129,9 @@ public class RegistrationController {
         alert.setContentText(message);
         alert.showAndWait();
     }
-
+    private boolean isAdult(LocalDate birthday) {
+        LocalDate today = LocalDate.now();
+        LocalDate adultDate = birthday.plusYears(18);
+        return !adultDate.isAfter(today); // true если 18 лет уже исполнилось
+    }
 }

@@ -165,7 +165,12 @@ public class CarDAO {
 
     public static List<Car> searchCars(String query) {
         List<Car> cars = new ArrayList<>();
-        String sql = "SELECT * FROM cars WHERE name LIKE ? OR model LIKE ?";
+
+        String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, " +
+                "c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission, c.image_path " +
+                "FROM cars c " +
+                "LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers " +
+                "WHERE m.name ILIKE ? OR c.model ILIKE ?";
 
         try (Connection conn = DbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -187,6 +192,10 @@ public class CarDAO {
                         rs.getString("transmission"),
                         rs.getString("image_path")
                 );
+
+                // Устанавливаем название производителя
+                car.setManufacturerName(rs.getString("name"));
+
                 cars.add(car);
             }
         } catch (SQLException e) {

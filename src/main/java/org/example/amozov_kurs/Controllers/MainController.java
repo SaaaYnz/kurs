@@ -21,8 +21,13 @@ import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
+    @FXML
 
     public Button filterButton;
+
+    @FXML
+    public Button searchButton;
+
     @FXML
     private Button accountButton;
 
@@ -60,9 +65,7 @@ public class MainController implements Initializable {
 
     private void addCarCard(Car car) {
         try {
-            FXMLLoader loader = new FXMLLoader(
-                    getClass().getResource("/org/example/amozov_kurs/car-card.fxml")
-            );
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/car-card.fxml"));
             VBox card = loader.load();
             CarCardController controller = loader.getController();
             controller.setCar(car);
@@ -79,6 +82,32 @@ public class MainController implements Initializable {
         Parent root = loader.load();
         stage.centerOnScreen();
         stage.setTitle("Admin-panel");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    private void handleSearch() {
+        String searchText = searchField.getText().trim();
+        catalogFlow.getChildren().clear();
+        List<Car> cars;
+        if (searchText.isEmpty()) {
+            cars = CarDAO.loadCars();
+        } else {
+            cars = CarDAO.searchCars(searchText);
+        }
+        for (Car car : cars) {
+            addCarCard(car);
+        }
+    }
+
+    @FXML
+    private void handleSignOut() throws IOException {
+        Stage stage = (Stage) searchField.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/login.fxml"));
+        Parent root = loader.load();
+        stage.centerOnScreen();
+        stage.setTitle("Authorization");
         stage.setScene(new Scene(root));
         stage.show();
     }
