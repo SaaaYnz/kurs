@@ -6,7 +6,9 @@ module org.example.amozov_kurs {
     requires java.desktop;
     requires javafx.base;
     requires jbcrypt;
-    requires org.example.amozov_kurs;
+    requires java.prefs;
+    requires org.postgresql.jdbc;
+//    requires org.example.amozov_kurs;
 //    requires org.example.amozov_kurs;
 //    requires org.example.amozov_kurs;
 //    requires javafx.scene.control;

@@ -15,6 +15,15 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="2.0" prefWidth="443.0">
+         <children>
+            <Button fx:id="dbSettingButton" onAction="#handleSettings" mnemonicParsing="false" prefHeight="30.0" prefWidth="90.0" style="-fx-background-color: white; -fx-border-radius: 15; -fx-background-radius: 15; -fx-border-color: #0fb7ff;" text="DbSet" textFill="#0fb7ff">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
         <Label text="AUTHORIZATION">
             <font>
                 <Font name="System Bold" size="28.0" />

@@ -62,23 +62,34 @@ public class MoveController {
         LocalDate date = datePick.getValue();
 
         if (selectedService == null || date == null) {
-            showAlert("Error", "");
+            showAlert("Error", "fill all fields");
             return;
         }
-
-        ServiceDAO.addOrder(
-                carId,
-                userId,
-                selectedService.getIdService(),
-                date
-        );
-
+        if (date.isBefore(LocalDate.now())) {
+            ServiceDAO.addOrder(
+                    carId,
+                    userId,
+                    selectedService.getIdService(),
+                    date
+            );
         showAlert("Order", "we will contact you");
         closeWindow();
+        } else {
+            showErrorAlert("Error", "the date cannot be earlier in the past");
+        }
+
+
     }
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    private void showErrorAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

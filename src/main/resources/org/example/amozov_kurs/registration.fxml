@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.RegistrationController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="726.0" prefWidth="500.0" spacing="20.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.RegistrationController">
     <children>
         <Label text="REGISTRATION">
             <font>
@@ -24,34 +24,73 @@
         <Separator prefHeight="10.0" prefWidth="500.0" />
         <VBox alignment="CENTER" prefHeight="321.0" prefWidth="500.0" spacing="20.0">
             <children>
-                <TextField fx:id="FirstNameField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="First name" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </TextField>
-                <TextField fx:id="LastNameField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Last name" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </TextField>
-                <TextField fx:id="EmailField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="E-mail" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </TextField>
-                <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Login" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-                    <opaqueInsets>
-                        <Insets />
-                    </opaqueInsets>
-                </TextField>
-            <TextField fx:id="phoneField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Phone" style="-fx-border-radius: 15; -fx-background-radius: 15;">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </TextField>
-                <PasswordField fx:id="PasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Password" style="-fx-background-radius: 15; -fx-border-radius: 15;" />
-                <PasswordField fx:id="ConfirmPasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Verify password" style="-fx-background-radius: 15; -fx-border-radius: 15;" />
-            <DatePicker fx:id="datePick" maxWidth="400.0" minHeight="30.0" prefHeight="30.0" />
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <VBox alignment="CENTER_LEFT" prefHeight="480.0" prefWidth="125.0" spacing="34.0">
+                     <children>
+                        <Label text="Имя:">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label text="Фамилия:" />
+                        <Label text="E-mail:" />
+                        <Label prefHeight="16.0" prefWidth="89.0" text="Login:" />
+                        <Label prefHeight="16.0" prefWidth="72.0" text="Inn:" />
+                        <Label text="Seria/number:" />
+                        <Label text="Phone number:" />
+                        <Label text="Password:" />
+                        <Label text="Confirm password:" />
+                        <Label text="Birthday:" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="0.0" spacing="20.0">
+                     <children>
+                            <TextField fx:id="FirstNameField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="First name..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                            </TextField>
+                            <TextField fx:id="LastNameField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Last name..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                            </TextField>
+                            <TextField fx:id="EmailField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="E-mail..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                            </TextField>
+                            <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Login..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                                <opaqueInsets>
+                                    <Insets />
+                                </opaqueInsets>
+                            </TextField>
+                        <TextField fx:id="InnField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Inn..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextField>
+                        <TextField fx:id="PassportField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Seria/passport..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextField>
+                        <TextField fx:id="phoneField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Phone..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </TextField>
+                            <PasswordField fx:id="PasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Password..." style="-fx-background-radius: 15; -fx-border-radius: 15;" />
+                            <PasswordField fx:id="ConfirmPasswordField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Verify password..." style="-fx-background-radius: 15; -fx-border-radius: 15;" />
+                        <DatePicker fx:id="datePick" maxWidth="400.0" minHeight="30.0" prefHeight="30.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
             </children>
         </VBox>
         <HBox alignment="TOP_RIGHT" maxWidth="400.0" prefHeight="115.0" prefWidth="400.0">

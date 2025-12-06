@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="511.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.EditController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="511" minWidth="600" prefHeight="511.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.amozov_kurs.Controllers.EditController">
     <children>
         <HBox prefHeight="507.0" prefWidth="600.0">
             <children>

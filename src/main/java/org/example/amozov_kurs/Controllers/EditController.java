@@ -89,7 +89,10 @@ public class EditController {
         );
         boolean success = CarDAO.updateCar(updatedCar);
         if (success) {
+            showAlert("Success", "data update");
             closeWindow();
+        } else {
+            showAlert("Error", "");
         }
     }
 

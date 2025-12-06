@@ -7,41 +7,7 @@ import java.sql.*;
 import java.time.LocalDate;
 
 public class UserDAO {
-
-//    public User validateUser(String log, String password) {
-//        String sql = "SELECT * FROM users WHERE (login = ? OR email = ?) AND password = ?";
-//        User u = findByUsername(log);
-//        String unhash = String.valueOf(BCrypt.checkpw(password, u.getPassword()));
-//        try (Connection db = DbConnection.getConnection();
-//             PreparedStatement stmt = db.prepareStatement(sql)) {
-//
-//            stmt.setString(1, log);
-//            stmt.setString(2, log);
-//            stmt.setString(3, unhash);
-//
-//            try (ResultSet rs = stmt.executeQuery()) {
-//                if (rs.next()) {
-//                    Date birthdayDate = rs.getDate("birthday");
-//
-//                    return new User(
-//                            rs.getInt("id_users"),
-//                            rs.getString("first_name"),
-//                            rs.getString("last_name"),
-//                            rs.getString("role"),
-//                            rs.getString("email"),
-//                            rs.getString("login"),
-//                            rs.getString("password"),
-//                            birthdayDate,
-//                            rs.getString("phone_number")
-//                    );
-//                }
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-
+    private static final DbConnection dbConnection = new DbConnection();
     public User authenticate(String username, String plainPassword) throws  ClassNotFoundException, SQLException {
         User u = findByUsername(username);
         if (u == null) return null;
@@ -52,7 +18,7 @@ public class UserDAO {
 
     public User findByUsername(String username) {
         String sql = "SELECT * FROM users WHERE login = ?";
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement st = conn.prepareStatement(sql)) {
             st.setString(1, username);
             ResultSet rs = st.executeQuery();
@@ -64,25 +30,29 @@ public class UserDAO {
                         rs.getString("last_name"),
                         rs.getString("role"),
                         rs.getString("email"),
+                        rs.getString("inn"),
+                        rs.getString("passport"),
                         rs.getString("login"),
                         rs.getString("password"),
                         birthdayDate,
                         rs.getString("phone_number")
                 );
             }
-        } catch (SQLException e) { e.printStackTrace(); }
+        } catch (SQLException e) { e.printStackTrace(); } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         return null;
     }
 
     public boolean registerUser(String first_name, String last_name, String email,
                                 String login, String password, LocalDate birthday,
-                                String phone_number) {
+                                String phone_number, String inn, String passport) {
         String role = "client";
         String hash = BCrypt.hashpw(password, BCrypt.gensalt());
-        String sql = "INSERT INTO users (first_name, last_name, email, login, password, role, birthday, phone_number) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO users (first_name, last_name, email, login, password, role, birthday, phone_number, inn, passport) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection db = DbConnection.getConnection();
+        try (Connection db = dbConnection.getConnection();
              PreparedStatement stmt = db.prepareStatement(sql)) {
 
             stmt.setString(1, first_name);
@@ -103,6 +73,8 @@ public class UserDAO {
             } else {
                 stmt.setNull(8, Types.VARCHAR);
             }
+            stmt.setString(9, inn);
+            stmt.setString(10, passport);
 
             int rowsAffected = stmt.executeUpdate();
             return rowsAffected > 0;
@@ -110,6 +82,45 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public static void checkUniqueEmail(String email) throws SQLException {
+        if (email.isEmpty()) return;
+        String sql = "SELECT COUNT(*) FROM users WHERE email = ?";
+        checkExists(sql, email);
+    }
+
+    public static void checkUniqueInn(String inn) throws SQLException {
+        if (inn.isEmpty()) return;
+        String sql = "SELECT COUNT(*) FROM users WHERE inn = ?";
+        checkExists(sql, inn);
+    }
+
+    public static void checkUniquePassport(String passport) throws SQLException {
+        if (passport.isEmpty()) return;
+        String sql = "SELECT COUNT(*) FROM users WHERE passport = ?";
+        checkExists(sql, passport);
+    }
+
+    public static void checkUniqueLogin(String login) throws SQLException {
+        if (login.isEmpty()) return;
+        String sql = "SELECT COUNT(*) FROM users WHERE login = ?";
+        checkExists(sql, login);
+    }
+
+    private static void checkExists(String sql, String value) throws SQLException {
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, value);
+            ResultSet rs = stmt.executeQuery();
+            rs.next();
+            if (rs.getInt(1) > 0) {
+                throw new SQLException("Значение '" + value + "' уже существует");
+            }
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

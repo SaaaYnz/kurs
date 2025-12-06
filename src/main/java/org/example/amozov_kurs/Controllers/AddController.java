@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 
 public class AddController {
 
@@ -55,21 +56,85 @@ public class AddController {
 
     @FXML
     private void handleSave() {
-        Integer manufacturerId = ManufacturerDAO.getManufacturerIdByName(manufactureChoice.getValue());
-        Car addedCar = new Car(
-                null,
-                manufacturerId,
-                modelField.getText(),
-                bodyTypeField.getText(),
-                Integer.parseInt(yearField.getText()),
-                Integer.parseInt(priceField.getText()),
-                engineTypeField.getText(),
-                transmissionField.getText(),
-                selectedImagePath != null ? selectedImagePath : currentCar.getImagePath()
-        );
-        boolean success = CarDAO.addCar(addedCar);
-        if (success) {
-            closeWindow();
+        String model = modelField.getText().trim();
+        if (model.isEmpty()) {
+            showError("Error", "fill in fields model");
+            return;
+        }
+
+        String bodyType = bodyTypeField.getText().trim();
+        if (bodyType.isEmpty()) {
+            showError("Error", "fill in fields body type");
+            return;
+        }
+
+        String yearText = yearField.getText().trim();
+        if (!yearText.matches("^[0-9]+$")) {
+            showError("Error", "only numbers");
+            return;
+        }
+        int year;
+        try {
+            year = Integer.parseInt(yearText);
+            int currentYear = LocalDate.now().getYear();
+            if (year < 1990 || year > currentYear) {
+                showError("Error", "the year must be after 1990 and before " + currentYear);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showError("Error", "invalid year format");
+            return;
+        }
+
+        String priceText = priceField.getText().trim();
+        if (!priceText.matches("^[0-9]+$")) {
+            showError("Error", "only numbers");
+            return;
+        }
+        int price;
+        try {
+            price = Integer.parseInt(priceText);
+            if (price <= 0) {
+                showError("Error", "price is more than 0");
+                return;
+            }
+        } catch (NumberFormatException e) {
+            showError("Error", "invalid price format");
+            return;
+        }
+
+        String engineType = engineTypeField.getText().trim();
+        if (engineType.isEmpty()) {
+            showError("Error", "fill in fields engine type");
+            return;
+        }
+
+        String transmission = transmissionField.getText().trim();
+        if (transmission.isEmpty()) {
+            showError("Error", "fill in fields transmission");
+            return;
+        }
+        try {
+            Integer manufacturerId = ManufacturerDAO.getManufacturerIdByName(manufactureChoice.getValue());
+            Car addedCar = new Car(
+                    null,
+                    manufacturerId,
+                    modelField.getText(),
+                    bodyTypeField.getText(),
+                    Integer.parseInt(yearField.getText()),
+                    Integer.parseInt(priceField.getText()),
+                    engineTypeField.getText(),
+                    transmissionField.getText(),
+                    selectedImagePath != null ? selectedImagePath : currentCar.getImagePath()
+
+            );
+
+            boolean success = CarDAO.addCar(addedCar);
+            if (success) {
+                closeWindow();
+            }
+        } catch (Exception e) {
+            showAlert("Error", "error" + e.getMessage());
         }
     }
 
@@ -155,6 +220,14 @@ public class AddController {
 
     private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    private void showError(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

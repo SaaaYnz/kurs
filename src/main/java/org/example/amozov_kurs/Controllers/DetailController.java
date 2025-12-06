@@ -125,10 +125,6 @@ public class DetailController {
         }
     }
     public void handleMove() throws IOException {
-        if (currentUser == null) {
-            showError("Ошибка: пользователь не авторизован.");
-            return;
-        }
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/move.fxml"));
         Parent root = loader.load();
@@ -141,14 +137,6 @@ public class DetailController {
         stage.showAndWait();
 
         closeWindow();
-    }
-
-    private void showError(String msg) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Ошибка");
-        alert.setHeaderText(null);
-        alert.setContentText(msg);
-        alert.showAndWait();
     }
 
 }

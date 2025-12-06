@@ -1,18 +1,77 @@
 package org.example.amozov_kurs.DAO;
 
-import java.net.URL;
-import java.sql.*;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.prefs.Preferences;
 
 public class DbConnection {
-//    private static final String URL = "jdbc:postgresql://localhost:5432/postgres?currentSchema=car_dealership";
-//    private static final String USER = "postgres";
-//    private static final String PASSWORD = "123";
-//
-    private static final String URL = "jdbc:postgresql://2.nntc.nnov.ru:6543/postgres_user_2?currentSchema=kurs_amozov";
-    private static final String USER = "postgres_user_2";
-    private static final String PASSWORD = "tb718r5w";
 
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
+    private final Preferences prefs;
+
+    public DbConnection() {
+        this.prefs = Preferences.userRoot().node("pref");
+    }
+
+    public String getHost() {
+        return prefs.get("host", "host");
+    }
+
+    public String getPort() {
+        return prefs.get("port", "port");
+    }
+
+    public String getDbName() {
+        return prefs.get("db_name", "db_name");
+    }
+
+    public String getSchema() {
+        return prefs.get("schema", "schema");
+    }
+
+    public String getLogin() {
+        return prefs.get("login", "login");
+    }
+
+    public String getPassword() {
+        return prefs.get("pass", "pass");
+    }
+
+
+    public void saveSettings(String host,
+                             String port,
+                             String dbName,
+                             String schema,
+                             String login,
+                             String pass) {
+        prefs.put("host", host);
+        prefs.put("port", port);
+        prefs.put("db_name", dbName);
+        prefs.put("schema", schema);
+        prefs.put("login", login);
+        prefs.put("pass", pass);
+    }
+
+    public Connection getConnection() throws ClassNotFoundException, SQLException {
+        String connStr = "jdbc:postgresql://" + getHost() + ":" + getPort() + "/" + getDbName() + "?currentSchema=" + getSchema();
+        Class.forName("org.postgresql.Driver");
+        return DriverManager.getConnection(connStr, getLogin(), getPassword());
+    }
+
+    public boolean canConnect() {
+        try (Connection conn = getConnection()) {
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

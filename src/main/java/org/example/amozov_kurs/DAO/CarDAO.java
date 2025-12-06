@@ -9,12 +9,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class CarDAO {
+
+    private static final DbConnection dbConnection = new DbConnection();
+
     public static List<Car> loadCars() {
         List<Car> cars = new ArrayList<>();
         String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission, c.image_path FROM cars c LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers ORDER BY c.year DESC, c.model";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -37,6 +41,8 @@ public class CarDAO {
             System.out.println(cars);
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
 
         return cars;
@@ -54,7 +60,7 @@ public class CarDAO {
                 "image_path = ? " +
                 "WHERE id_cars = ?";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, car.getIdManufacturers());
@@ -71,6 +77,8 @@ public class CarDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -78,7 +86,7 @@ public class CarDAO {
         List<String> manufacturers = new ArrayList<>();
         String sql = "SELECT DISTINCT image_path FROM cars ORDER BY image_path";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -87,6 +95,8 @@ public class CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return manufacturers;
     }
@@ -95,7 +105,7 @@ public class CarDAO {
         String sql = "INSERT INTO cars (id_manufacturers, model, body_type, year, price, engine_type, transmission, image_path) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, car.getIdManufacturers());
@@ -111,13 +121,15 @@ public class CarDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
     public static boolean deleteCar(Integer carId) {
         String sql = "DELETE FROM cars WHERE id_cars = ?";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, carId);
@@ -127,6 +139,8 @@ public class CarDAO {
 
         } catch (SQLException e) {
             return false;
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -136,7 +150,7 @@ public class CarDAO {
                 "JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers " +
                 "WHERE c.id_cars = ?";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, carId);
@@ -159,6 +173,8 @@ public class CarDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return null;
     }
@@ -172,7 +188,7 @@ public class CarDAO {
                 "LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers " +
                 "WHERE m.name ILIKE ? OR c.model ILIKE ?";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, "%" + query + "%");
@@ -193,13 +209,14 @@ public class CarDAO {
                         rs.getString("image_path")
                 );
 
-                // Устанавливаем название производителя
                 car.setManufacturerName(rs.getString("name"));
 
                 cars.add(car);
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return cars;
     }

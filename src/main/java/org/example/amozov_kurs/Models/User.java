@@ -9,6 +9,8 @@ public class User {
     private String last_name;
     private String role;
     private String email;
+    private String inn;
+    private String passport;
     private String login;
     private String password;
     private Date birthday;
@@ -19,8 +21,10 @@ public class User {
                 String last_name,
                 String role,
                 String email,
+                String inn,
+                String passport,
                 String login,
-                String passord,
+                String password,
                 Date birthday,
                 String phone_number) {
         this.id_users = id_users;
@@ -28,8 +32,10 @@ public class User {
         this.last_name = last_name;
         this.role = role;
         this.email = email;
+        this.inn = inn;
+        this.passport = passport;
         this.login = login;
-        this.password = passord;
+        this.password = password;
         this.birthday = birthday;
         this.phone_number = phone_number;
     }
@@ -39,21 +45,18 @@ public class User {
     public String getLast_name() { return last_name; }
     public String getRole() { return role; }
     public String getEmail() { return email; }
+    public String getInn() { return inn; }
+    public String getPassport() { return passport; }
     public String getLogin() { return login; }
     public Date getBirthday() { return birthday; }
     public String getPhone_number() { return phone_number; }
     public String getPassword() {return password; }
-
     public void setPhone_number(String phone_number) {
         this.phone_number = phone_number;
     }
 
     public boolean isClient() {
         return "client".equals(role);
-    }
-
-    public boolean isEmployee() {
-        return "employee".equals(role);
     }
 
     public boolean isAdmin() {

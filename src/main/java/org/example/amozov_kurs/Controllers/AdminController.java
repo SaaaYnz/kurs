@@ -15,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.DAO.DbConnection;
+import org.example.amozov_kurs.DAO.OrderDAO;
 import org.example.amozov_kurs.Models.Car;
 import org.example.amozov_kurs.DAO.CarDAO;
 import org.example.amozov_kurs.Models.Order;
@@ -25,11 +26,36 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import java.util.Objects;
 
 public class AdminController {
 
     public Label labelText;
+    @FXML
+    public TableColumn<Order, Integer> orderIdColumn;
+
+    @FXML
+    public TableColumn<Order, String> carNameColumn;
+
+    @FXML
+    public TableColumn<Order, String> serviceNameColumn;
+
+    @FXML
+    public TableColumn<Order, String> userNameColumn;
+
+    @FXML
+    public TableColumn<Order, Date> orderDateColumn;
+
+    @FXML
+    public TableColumn<Order, String> statusColumn;
+
+    @FXML
+    public Button carsButton;
+
+    @FXML
+    public Button orderButton;
+
     @FXML
     private ContextMenu editContextMenu;
 
@@ -70,11 +96,15 @@ public class AdminController {
 
     private ObservableList<Car> carData = FXCollections.observableArrayList();
 
+    private ObservableList<Order> orderData = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
 
-        setupTableColumn();
+        setupCarTableColumn();
+        setupOrderTableColumn();
         loadCarData();
+        loadOrderData();
 
     }
 
@@ -83,7 +113,13 @@ public class AdminController {
         carData.addAll(CarDAO.loadCars());
         carTable.setItems(carData);
         carTable.refresh();
+    }
 
+    public void loadOrderData() {
+        orderData.clear();
+        orderData.addAll(OrderDAO.loadOrders());
+        orderTable.setItems(orderData);
+        orderTable.refresh();
     }
 
 
@@ -93,6 +129,13 @@ public class AdminController {
 
         orderTable.setVisible(false);
         orderTable.setManaged(false);
+
+        addButton.setVisible(true);
+        deleteButton.setVisible(true);
+
+        carsButton.setStyle("-fx-background-color: #0fb7ff; -fx-background-radius: 15; -fx-text-fill: white");
+
+        orderButton.setStyle("-fx-background-color: white; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #0fb7ff; -fx-text-fill: #0fb7ff");
     }
 
     public void showOrdersTable() {
@@ -101,9 +144,25 @@ public class AdminController {
 
         orderTable.setVisible(true);
         orderTable.setManaged(true);
+
+        addButton.setVisible(false);
+        deleteButton.setVisible(false);
+
+        carsButton.setStyle("-fx-background-color: white; -fx-background-radius: 15; -fx-border-radius: 15; -fx-border-color: #0fb7ff; -fx-text-fill: #0fb7ff");
+
+        orderButton.setStyle("-fx-background-color: #0fb7ff; -fx-background-radius: 15; -fx-text-fill: white");
     }
 
-    public void setupTableColumn() {
+    public void setupOrderTableColumn() {
+        orderIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        carNameColumn.setCellValueFactory(new PropertyValueFactory<>("carName"));
+        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
+        serviceNameColumn.setCellValueFactory(new PropertyValueFactory<>("serviceName"));
+        orderDateColumn.setCellValueFactory(new PropertyValueFactory<>("orderDate"));
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+    }
+
+    public void setupCarTableColumn() {
 
         manufactureColumn.setCellValueFactory(new PropertyValueFactory<>("manufacturerName"));
         modelColumn.setCellValueFactory(new PropertyValueFactory<>("modelName"));
@@ -144,13 +203,12 @@ public class AdminController {
     @FXML
     private void handleEditCar() throws IOException {
         Car selectedCar = carTable.getSelectionModel().getSelectedItem();
-
-        Stage currentStage = (Stage) carTable.getScene().getWindow();
-
         FXMLLoader editLoader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/edit.fxml"));
+        Parent root = editLoader.load();
         Stage editStage = new Stage();
         editStage.initModality(Modality.APPLICATION_MODAL);
-        editStage.setScene(new Scene(editLoader.load()));
+
+        editStage.centerOnScreen();
 
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
         editStage.getIcons().add(icon);
@@ -159,10 +217,9 @@ public class AdminController {
         editController.setCar(selectedCar);
 
         editStage.setTitle("Editing car");
-
+        editStage.setScene(new Scene(root));
         editStage.showAndWait();
-
-        setupTableColumn();
+        setupCarTableColumn();
         loadCarData();
         carTable.refresh();
     }
@@ -191,6 +248,18 @@ public class AdminController {
     }
 
     @FXML
+    private void handleAddManufacture() throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/add-manufacture.fxml"));
+        Stage addStage = new Stage();
+        addStage.setScene(new Scene(loader.load()));
+        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
+        addStage.getIcons().add(icon);
+        addStage.initModality(Modality.APPLICATION_MODAL);
+        addStage.setTitle("Add car");
+        addStage.showAndWait();
+    }
+
+    @FXML
     private void handleDeleteCar() {
         Car selectedCar = carTable.getSelectionModel().getSelectedItem();
 
@@ -203,12 +272,12 @@ public class AdminController {
 
             if (success) {
                 carTable.getItems().remove(selectedCar);
-                System.out.println("Автомобиль успешно удален");
+                showAlert("success", "car delete");
             } else {
-                System.out.println("Не удалось удалить автомобиль");
+                showAlert("error", "car not delete");
             }
         } catch (Exception e) {
-            System.out.println("Ошибка при удалении: " + e.getMessage());
+            System.out.println("Error " + e.getMessage());
         }
     }
 }

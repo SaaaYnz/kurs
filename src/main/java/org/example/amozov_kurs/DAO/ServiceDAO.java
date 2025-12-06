@@ -10,11 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ServiceDAO {
+    private static final DbConnection dbConnection = new DbConnection();
     public static List<Service> getAllService() {
         List<Service> services = new ArrayList<>();
         String sql = "SELECT id_services, service_name FROM services ORDER BY service_name";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
              ResultSet rs = stmt.executeQuery()) {
 
@@ -25,6 +26,8 @@ public class ServiceDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
         return services;
     }
@@ -37,7 +40,7 @@ public class ServiceDAO {
         String sql = "INSERT INTO service_orders (id_cars, order_date, status, id_users, id_services) " +
                 "VALUES (?, ?, 'create', ?, ?)";
 
-        try (Connection conn = DbConnection.getConnection();
+        try (Connection conn = dbConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setInt(1, idCar);
@@ -49,6 +52,8 @@ public class ServiceDAO {
 
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при добавлении заказа: " + e.getMessage(), e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
         }
     }
 }

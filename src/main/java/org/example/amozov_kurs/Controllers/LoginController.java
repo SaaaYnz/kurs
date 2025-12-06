@@ -17,6 +17,9 @@ import java.util.Objects;
 public class LoginController {
 
     @FXML
+    public Button dbSettingButton;
+
+    @FXML
     private CheckBox CheckRemember;
 
     @FXML
@@ -87,6 +90,17 @@ public class LoginController {
         Parent root = loader.load();
         stage.centerOnScreen();
         stage.setTitle("Registration");
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
+    @FXML
+    private void handleSettings() throws IOException {
+        Stage stage = (Stage) PasswordField.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/amozov_kurs/db-settings.fxml"));
+        Parent root = loader.load();
+        stage.centerOnScreen();
+        stage.setTitle("Data Base Settings");
         stage.setScene(new Scene(root));
         stage.show();
     }
