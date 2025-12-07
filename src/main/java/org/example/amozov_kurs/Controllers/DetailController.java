@@ -4,26 +4,18 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.FileChooser;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.example.amozov_kurs.DAO.CarDAO;
-import org.example.amozov_kurs.DAO.ManufacturerDAO;
 import org.example.amozov_kurs.Models.Car;
 import org.example.amozov_kurs.Models.User;
-import org.example.amozov_kurs.Session.AuthSession;
+import org.example.amozov_kurs.Models.AuthSession;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.util.Objects;
 
 public class DetailController {
 

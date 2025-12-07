@@ -1,6 +1,4 @@
-package org.example.amozov_kurs.Session;
-
-import org.example.amozov_kurs.Models.User;
+package org.example.amozov_kurs.Models;
 
 public class AuthSession {
 

@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.DAO.UserDAO;
 import org.example.amozov_kurs.Models.User;
-import org.example.amozov_kurs.Session.AuthSession;
+import org.example.amozov_kurs.Models.AuthSession;
 
 import java.io.IOException;
 import java.sql.SQLException;

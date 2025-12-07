@@ -4,10 +4,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.example.amozov_kurs.Models.Order;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.time.LocalDate;
 
 public class OrderDAO {
     private static final DbConnection dbConnection = new DbConnection();
@@ -43,5 +41,29 @@ public class OrderDAO {
         }
 
         return orders;
+    }
+    public boolean addOrder(int idCar,
+                            int idUser,
+                            int idService,
+                            LocalDate orderDate) {
+
+        String sql = "INSERT INTO service_orders (id_cars, order_date, status, id_users, id_services) " +
+                "VALUES (?, ?, 'create', ?, ?)";
+
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt  = conn.prepareStatement(sql)) {
+
+            stmt .setInt(1, idCar);
+            stmt .setDate(2, java.sql.Date.valueOf(orderDate));
+            stmt .setInt(3, idUser);
+            stmt .setInt(4, idService);
+
+            return stmt .executeUpdate() > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Ошибка при добавлении заказа: " + e.getMessage(), e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

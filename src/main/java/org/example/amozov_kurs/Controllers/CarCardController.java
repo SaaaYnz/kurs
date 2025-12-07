@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.example.amozov_kurs.Models.Car;
-import org.example.amozov_kurs.Session.AuthSession;
 
 import java.io.File;
 import java.io.IOException;
