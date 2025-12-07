@@ -4,6 +4,8 @@ public class Service {
     private Integer idService;
     private String serviceName;
 
+    public Service() { }
+
     public Service(Integer idService, String serviceName) {
         this.idService = idService;
         this.serviceName = serviceName;
@@ -12,4 +14,6 @@ public class Service {
     public Integer getIdService() { return  idService; }
 
     public String getServiceName() { return  serviceName; }
+
+    public void setIdService(int service) { this.idService = service; }
 }

@@ -255,7 +255,7 @@ public class AdminController {
         Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/amozov_kurs/image/icon.png")));
         addStage.getIcons().add(icon);
         addStage.initModality(Modality.APPLICATION_MODAL);
-        addStage.setTitle("Add car");
+        addStage.setTitle("Add manufacturer");
         addStage.showAndWait();
     }
 

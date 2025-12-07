@@ -29,7 +29,7 @@ public class ManufacturerDAO {
         return manufacturers;
     }
 
-    public static boolean addManufacture(String manufacture_name, String country) {
+    public boolean addManufacture(String manufacture_name, String country) {
         String sql = "insert into manufacturers (name, country) values (?, ?)";
 
         try (Connection conn = dbConnection.getConnection();

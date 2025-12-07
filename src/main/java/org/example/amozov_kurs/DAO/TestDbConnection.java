@@ -1,6 +1,5 @@
 package org.example.amozov_kurs.DAO;
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 

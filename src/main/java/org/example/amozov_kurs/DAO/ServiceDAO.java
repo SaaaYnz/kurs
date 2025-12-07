@@ -32,7 +32,7 @@ public class ServiceDAO {
         return services;
     }
 
-    public static void addOrder(int idCar,
+    public boolean addOrder(int idCar,
                                 int idUser,
                                 int idService,
                                 LocalDate orderDate) {
@@ -48,7 +48,7 @@ public class ServiceDAO {
             ps.setInt(3, idUser);
             ps.setInt(4, idService);
 
-            ps.executeUpdate();
+            return ps.executeUpdate() > 0;
 
         } catch (SQLException e) {
             throw new RuntimeException("Ошибка при добавлении заказа: " + e.getMessage(), e);

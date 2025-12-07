@@ -5,6 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import org.example.amozov_kurs.DAO.ManufacturerDAO;
+import org.example.amozov_kurs.Service.ManufacturerService;
 
 public class AddManufacturerController {
     @FXML
@@ -18,20 +19,20 @@ public class AddManufacturerController {
 
     ManufacturerDAO manufacturerDAO = new ManufacturerDAO();
 
+    private final ManufacturerService manufacturerService = new ManufacturerService();
+
     @FXML
     private void handleSave() {
         String nameManufacturer = manufactureField.getText();
         String country = countryField.getText();
 
-        if(nameManufacturer.isEmpty() || country.isEmpty()) {
-            showAlert("Error", "fill in all the fields");
-            return;
-        }
-        boolean manufacturer =  manufacturerDAO.addManufacture(nameManufacturer, country);
-        if (manufacturer) {
-            showAlert("Success", "manufacture added");
-        } else {
-            showAlert("Error", "failed");
+        String result = manufacturerService.addManufacturer(nameManufacturer, country);
+        switch (result) {
+            case "ok" -> showAlert("Success", "manufacturer added");
+
+            case "fail" -> showAlert("Error", "couldn't add manufacturer");
+
+            case "empty" -> showAlert("Error", "fill in all the fields");
         }
     }
 

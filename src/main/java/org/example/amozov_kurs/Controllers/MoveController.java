@@ -9,7 +9,9 @@ import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import org.example.amozov_kurs.DAO.ServiceDAO;
 import org.example.amozov_kurs.Models.Service;
+import org.example.amozov_kurs.Service.OrderService;
 
+import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -31,6 +33,8 @@ public class MoveController {
         this.carId = carId;
         this.userId = userId;
     }
+    ServiceDAO serviceDAO = new ServiceDAO();
+    OrderService orderService = new OrderService();
 
     @FXML
     public void initialize() {
@@ -61,28 +65,20 @@ public class MoveController {
         Service selectedService = choiceService.getValue();
         LocalDate date = datePick.getValue();
 
-        if (selectedService == null || date == null) {
-            showAlert("Error", "fill all fields");
-            return;
-        }
-        if (date.isBefore(LocalDate.now())) {
-            ServiceDAO.addOrder(
-                    carId,
-                    userId,
-                    selectedService.getIdService(),
-                    date
-            );
-        showAlert("Order", "we will contact you");
-        closeWindow();
-        } else {
-            showErrorAlert("Error", "the date cannot be earlier in the past");
-        }
+        String result = orderService.addOrder(carId, userId, selectedService, date);
+        switch (result) {
+            case "ok" -> showAlert("Success", "we will contact you");
 
+            case "past_date" -> showErrorAlert("Error", "the date cannot be earlier in the past");
 
+            case "empty" -> showErrorAlert("Error", "fill in all the fields");
+
+            case "fail" -> showErrorAlert("Error", "couldn't add order");
+        }
     }
 
     private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
