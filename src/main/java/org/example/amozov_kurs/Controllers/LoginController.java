@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import org.example.amozov_kurs.DAO.UserDAO;
 import org.example.amozov_kurs.Models.User;
 import org.example.amozov_kurs.Models.AuthSession;
-
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Objects;

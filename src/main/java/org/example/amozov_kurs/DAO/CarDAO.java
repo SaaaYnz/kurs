@@ -16,7 +16,8 @@ public class CarDAO {
 
     public static List<Car> loadCars() {
         List<Car> cars = new ArrayList<>();
-        String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission, c.image_path FROM cars c LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers ORDER BY c.year DESC, c.model";
+        String sql = "SELECT c.id_cars, c.id_manufacturers, m.name, c.model, c.body_type, c.year, c.price, c.engine_type, c.transmission, c.image_path " +
+                "FROM cars c LEFT JOIN manufacturers m ON c.id_manufacturers = m.id_manufacturers";
 
         try (Connection conn = dbConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);

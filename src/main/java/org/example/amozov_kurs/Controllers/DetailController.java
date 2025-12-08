@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import org.example.amozov_kurs.Models.Car;
 import org.example.amozov_kurs.Models.User;
 import org.example.amozov_kurs.Models.AuthSession;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;

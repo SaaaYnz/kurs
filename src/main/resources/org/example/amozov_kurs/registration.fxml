@@ -59,27 +59,27 @@
                                     <Insets />
                                 </opaqueInsets>
                             </TextField>
-                            <TextField fx:id="EmailField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="E-mail..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                            <TextField fx:id="EmailField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="E-mail... | example@exam.ex" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                                 <opaqueInsets>
                                     <Insets />
                                 </opaqueInsets>
                             </TextField>
-                            <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Login..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                            <TextField fx:id="LoginField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Login... | (3-20 char A-Z. a-z, 0-9)" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                                 <opaqueInsets>
                                     <Insets />
                                 </opaqueInsets>
                             </TextField>
-                        <TextField fx:id="InnField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Inn..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                        <TextField fx:id="InnField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Inn... | 12 char" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </TextField>
-                        <TextField fx:id="PassportField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Seria/passport..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                        <TextField fx:id="PassportField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Seria/passport... | 10 char" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </TextField>
-                        <TextField fx:id="phoneField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Phone..." style="-fx-border-radius: 15; -fx-background-radius: 15;">
+                        <TextField fx:id="phoneField" maxWidth="400.0" minHeight="30.0" minWidth="250.0" promptText="Phone... | +7-***-***-**-**" style="-fx-border-radius: 15; -fx-background-radius: 15;">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
