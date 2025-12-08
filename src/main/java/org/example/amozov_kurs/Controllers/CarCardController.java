@@ -45,13 +45,6 @@ public class CarCardController {
                 File file = new File("src/main/resources/org/example/amozov_kurs/image/" + imageName);
                 if (file.exists()) {
                     carImage.setImage(new Image(file.toURI().toString()));
-                    carImage.setFitWidth(300);
-                    carImage.setFitHeight(200);
-
-                    carImage.setPreserveRatio(true);
-
-                    carImage.setSmooth(true);
-                    carImage.setCache(true);
                 } else {
                     carImage.setImage(null);
                 }

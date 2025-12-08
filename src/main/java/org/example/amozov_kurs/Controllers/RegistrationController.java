@@ -130,7 +130,7 @@ public class RegistrationController {
         }
 
         if (!phone.isEmpty() && !phone.matches("^\\+7-\\d{3}-\\d{3}-\\d{2}-\\d{2}$")) {
-            showAlert("Error", "Invalid phone format: *-***-***-**-**");
+            showAlert("Error", "Invalid phone format: +7-***-***-**-**");
             return;
         }
 
